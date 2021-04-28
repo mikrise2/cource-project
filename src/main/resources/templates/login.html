@@ -24,6 +24,11 @@
 <!--        <a class="btn btn-dark" href="/registration" role="button">registration</a>-->
     </div>
 </form>
+
+
+<a th:href="@{/oauth2/authorization/google}">Login with Google</a>
+<a th:href="@{/oauth2/authorization/facebook}">Login with Facebook</a>
+
 <div class="container-md mt-2">
     <div th:if="${param.error}" class="alert alert-danger">
         Invalid username and password or your account is blocked.
