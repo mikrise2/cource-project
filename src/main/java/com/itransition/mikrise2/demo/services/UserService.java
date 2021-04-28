@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class UserService implements UserDetailsService {
     @Autowired
@@ -39,4 +40,17 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
+    public void processOAuthPostLogin(String username) {
+        User existUser = userRepository.findByUsername(username);
+
+        if (existUser == null) {
+            User newUser = new User();
+            newUser.setUsername(username);
+            newUser.setPassword(bCryptPasswordEncoder.encode("new user"));
+//            newUser.setEnabled(true);
+            userRepository.save(newUser);
+        }
+
+    }
 }
+

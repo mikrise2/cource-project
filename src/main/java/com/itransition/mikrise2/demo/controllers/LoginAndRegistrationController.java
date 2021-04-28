@@ -21,10 +21,14 @@ public class LoginAndRegistrationController {
     }
 
     @PostMapping("/registration")
-    public String acceptRegistration(User userHTML) {
-        System.out.println(userHTML);
-        userService.saveUser(userHTML);
-        return "redirect:/login";
+    public String acceptRegistration(User userHTML, Map<String, Object> model) {
+
+        if (userService.saveUser(userHTML))
+            return "redirect:/login";
+        else {
+            model.put("error", "User exists!");
+            return "registration";
+        }
     }
 
 
