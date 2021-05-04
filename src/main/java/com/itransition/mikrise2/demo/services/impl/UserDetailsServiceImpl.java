@@ -1,4 +1,4 @@
-package com.itransition.mikrise2.demo.services;
+package com.itransition.mikrise2.demo.services.impl;
 
 import com.itransition.mikrise2.demo.entities.User;
 import com.itransition.mikrise2.demo.repos.UserRepo;
@@ -11,12 +11,13 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class UserService implements UserDetailsService {
-    @Autowired
-    UserRepo userRepository;
+public class UserDetailsServiceImpl implements UserDetailsService {
+    private final  UserRepo userRepository;
 
-    @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public UserDetailsServiceImpl(UserRepo userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -28,25 +29,12 @@ public class UserService implements UserDetailsService {
 
         return user;
     }
-
-    public boolean saveUser(User user) {
-        User userFromDB = userRepository.findByUsername(user.getUsername());
-
-        if (userFromDB != null) {
-            return false;
-        }
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-        return true;
-    }
-
     public void processOAuthPostLogin(String username) {
         User existUser = userRepository.findByUsername(username);
-
         if (existUser == null) {
             User newUser = new User();
             newUser.setUsername(username);
-            newUser.setPassword(bCryptPasswordEncoder.encode("new user"));
+            newUser.setPassword("new user");
 //            newUser.setEnabled(true);
             userRepository.save(newUser);
         }
