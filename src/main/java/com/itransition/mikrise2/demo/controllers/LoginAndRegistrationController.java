@@ -1,12 +1,17 @@
 package com.itransition.mikrise2.demo.controllers;
 
+import com.itransition.mikrise2.demo.entities.Bonus;
+import com.itransition.mikrise2.demo.entities.Company;
 import com.itransition.mikrise2.demo.entities.User;
+import com.itransition.mikrise2.demo.entities.enums.CompanyType;
+import com.itransition.mikrise2.demo.entities.enums.UserRole;
 import com.itransition.mikrise2.demo.services.UserEditingService;
-import com.itransition.mikrise2.demo.services.impl.UserDetailsServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -24,6 +29,36 @@ public class LoginAndRegistrationController {
 
     @PostMapping("/registration")
     public String acceptRegistration(User userHTML, Map<String, Object> model) {
+        userHTML.setActive(true);
+//        Bonus bonus = new Bonus();
+//        bonus.setCompanyName("myCompany");
+//        bonus.setAmountOfMoney(100);
+//
+//        Company company = new Company();
+//        company.setAmountToCollect(1000L);
+//        company.setCollectedAmount(10L);
+//        company.setCompanyType(CompanyType.TECHNOLOGIES);
+//        company.setInfo("this is my Company");
+//        company.setName("MyCompany");
+//
+//        Company company1 = new Company();
+//        company1.setAmountToCollect(10001L);
+//        company1.setCollectedAmount(101L);
+//        company1.setCompanyType(CompanyType.TECHNOLOGIES);
+//        company1.setInfo("this is my Company1");
+//        company1.setName("MyCompany1");
+//
+//        Bonus bonus1 = new Bonus();
+//        bonus1.setCompanyName("myCompany1");
+//        bonus1.setAmountOfMoney(1001);
+////        bonusList.add(bonus);
+////        bonusList.add(bonus1);
+//        userHTML.addBonus(bonus);
+//        userHTML.addBonus(bonus1);
+//        userHTML.addCompany(company);
+//        userHTML.addCompany(company1);
+//        userHTML.getBonuses().add(bonus);
+        userHTML.setUserRole(UserRole.USER);
 
         if (userEditingService.saveUser(userHTML))
             return "redirect:/login";

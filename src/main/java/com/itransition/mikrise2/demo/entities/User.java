@@ -1,40 +1,44 @@
 package com.itransition.mikrise2.demo.entities;
 
+import com.itransition.mikrise2.demo.entities.enums.UserRole;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String password;
+    private String name;
+    private String surname;
+    private String email;
+    private String country;
+    private boolean active;
 
-    public User() {
-    }
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_company", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "company_id"))
+    private List<Company> companies;
 
-    public User(Long id, String username, String password) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-    }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private List<Bonus> bonuses;
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole;
 
     @Override
     public boolean isAccountNonExpired() {
@@ -56,29 +60,30 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    @Override
+    public String getUsername() {
+        return username;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+    public void addBonus(Bonus bonus) {
+        if (bonuses == null)
+            bonuses = new ArrayList<>();
+        bonuses.add(bonus);
+    }
+
+    public void addCompany(Company company) {
+        if (companies == null)
+            companies = new ArrayList<>();
+        companies.add(company);
     }
 }

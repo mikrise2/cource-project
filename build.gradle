@@ -27,6 +27,9 @@ dependencies {
 
 	implementation group: 'org.webjars', name: 'bootstrap', version: '5.0.0-beta3'
 
+	compileOnly 'org.projectlombok:lombok:1.18.8'
+	annotationProcessor 'org.projectlombok:lombok:1.18.8'
+
 	implementation 'org.springframework.cloud:spring-cloud-starter'
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

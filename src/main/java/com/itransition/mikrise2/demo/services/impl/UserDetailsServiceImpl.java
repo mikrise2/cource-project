@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private final  UserRepo userRepository;
+    private final UserRepo userRepository;
 
 
     public UserDetailsServiceImpl(UserRepo userRepository) {
@@ -20,15 +20,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        System.out.println(user);
-        if (user == null) {
+    public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(usernameOrEmail);
+        if (user == null)
+            user = userRepository.findByEmail(usernameOrEmail);
+//        System.out.println(user);
+        if (user == null)
             throw new UsernameNotFoundException("User not found");
-        }
 
         return user;
     }
+
     public void processOAuthPostLogin(String username) {
         User existUser = userRepository.findByUsername(username);
         if (existUser == null) {
