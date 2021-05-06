@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Setter
@@ -30,11 +31,21 @@ public class Company {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_company", joinColumns = @JoinColumn(name = "company_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
+    private List<Bonus> bonuses;
+    @Column(name = "dead_line")
+    private Date finishDate;
 
     public void addUser(User user) {
         if (users == null)
             users = new ArrayList<>();
         users.add(user);
+    }
+
+    public void addBonus(Bonus bonus) {
+        if (bonuses == null)
+            bonuses = new ArrayList<>();
+        bonuses.add(bonus);
     }
 
 }

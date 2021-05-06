@@ -37,10 +37,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeRequests()
-                .antMatchers("/", "/login", "/registration", "/oauth/**", "/static/**").permitAll()
+                .antMatchers("/login", "/registration", "/oauth/**", "/css/**", "/images/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").permitAll()
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .defaultSuccessUrl("/feed")
                 .and()
                 .oauth2Login()
                 .loginPage("/login")
@@ -51,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             CustomOAuth2User oauthUser = (CustomOAuth2User) authentication.getPrincipal();
             userDetailsServiceImpl.processOAuthPostLogin(oauthUser.getName());
 
-            response.sendRedirect("/");
+            response.sendRedirect("/feed");
         })
                 .and()
                 .csrf()

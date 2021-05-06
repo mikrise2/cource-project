@@ -1,21 +1,19 @@
 package com.itransition.mikrise2.demo.services.impl;
 
 import com.itransition.mikrise2.demo.entities.User;
-import com.itransition.mikrise2.demo.repos.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.itransition.mikrise2.demo.repositories.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private final UserRepo userRepository;
+    private final UserRepository userRepository;
 
 
-    public UserDetailsServiceImpl(UserRepo userRepository) {
+    public UserDetailsServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -24,7 +22,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userRepository.findByUsername(usernameOrEmail);
         if (user == null)
             user = userRepository.findByEmail(usernameOrEmail);
-//        System.out.println(user);
         if (user == null)
             throw new UsernameNotFoundException("User not found");
 
@@ -37,6 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             User newUser = new User();
             newUser.setUsername(username);
             newUser.setPassword("new user");
+            newUser.setActive(true);
 //            newUser.setEnabled(true);
             userRepository.save(newUser);
         }

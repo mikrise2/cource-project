@@ -1,8 +1,10 @@
 package com.itransition.mikrise2.demo.entities;
 
 import lombok.*;
+import org.w3c.dom.stylesheets.LinkStyle;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,6 +17,10 @@ public class Bonus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String companyName;
-    private Integer amountOfMoney;
+    private String name;
+    private String info;
+    private Integer price;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "company_id")
+    private Company company;
 }
