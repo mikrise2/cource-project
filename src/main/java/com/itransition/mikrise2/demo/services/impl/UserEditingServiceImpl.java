@@ -20,9 +20,9 @@ public class UserEditingServiceImpl implements UserEditingService {
 
     @Override
     public boolean saveUser(User user) {
-        User userFromDBByUsername = userRepository.findByUsername(user.getUsername());
-        User userFromDBByEmail = userRepository.findByEmail(user.getEmail());
-        if (userFromDBByUsername != null || userFromDBByEmail != null) {
+        User userFromDB = userRepository.findByUsername(user.getUsername());
+
+        if (userFromDB != null) {
             return false;
         }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));

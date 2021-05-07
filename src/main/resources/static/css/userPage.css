@@ -31,14 +31,14 @@ body {
     padding: 1rem;
 }
 
-.gutters-sm {
-    margin-right: -8px;
-    margin-left: -8px;
+.gutters-md {
+    margin-right: -20px;
+    margin-left: -20px;
 }
 
-.gutters-sm > .col, .gutters-sm > [class*=col-] {
-    padding-right: 8px;
-    padding-left: 8px;
+.gutters-md > .col, .gutters-md > [class*=col-] {
+    padding-right: 20px;
+    padding-left: 20px;
 }
 
 .mb-3, .my-3 {
@@ -82,7 +82,7 @@ div.scrollMenu div {
     display: inline-block;
     color: #000000;
     text-align: center;
-    padding: 55px;
+    width: 30%;
     text-decoration: none;
 }
 
@@ -93,3 +93,11 @@ div.scrollMenu div:hover {
 div.scrollMenu div a {
     font-weight: bold;
 }
+
+
+div.scrollMenu div img{
+    width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+}
+
