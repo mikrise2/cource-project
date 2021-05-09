@@ -15,12 +15,18 @@ div.info {
     border-radius: .25rem;
 }
 
-.overflow-auto{
-    max-height:300px;
+.overflow-auto {
+    max-height: 300px;
 }
 
+.comment {
+    padding: 8px;
+}
 
-
+.comment:hover {
+    background-color: #d6d6d6;
+    border-radius: .25rem;
+}
 
 
 /*a*/
@@ -36,8 +42,8 @@ div.info {
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
 }
 
 /* Modal Content (image) */
@@ -69,13 +75,21 @@ div.info {
 }
 
 @-webkit-keyframes zoom {
-    from {-webkit-transform:scale(0)}
-    to {-webkit-transform:scale(1)}
+    from {
+        -webkit-transform: scale(0)
+    }
+    to {
+        -webkit-transform: scale(1)
+    }
 }
 
 @keyframes zoom {
-    from {transform:scale(0)}
-    to {transform:scale(1)}
+    from {
+        transform: scale(0)
+    }
+    to {
+        transform: scale(1)
+    }
 }
 
 /* The Close Button */
@@ -97,7 +111,7 @@ div.info {
 }
 
 /* 100% Image Width on Smaller Screens */
-@media only screen and (max-width: 700px){
+@media only screen and (max-width: 700px) {
     .modal-content {
         width: 100%;
     }
