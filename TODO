@@ -1,2 +1,65 @@
 1) тип загрузки бонусов(Eager или Lazy)
 2) добавление компании через пользователя???
+
+
+
+DROP TABLE IF EXISTS bonuses;
+DROP TABLE IF EXISTS user_company;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS companies;
+DROP SEQUENCE IF EXISTS bonuses_id_seq;
+DROP SEQUENCE IF EXISTS users_id_seq;
+DROP SEQUENCE IF EXISTS companies_id_seq;
+DROP SEQUENCE IF EXISTS user_company_company_id_seq;
+DROP SEQUENCE IF EXISTS user_company_user_id_seq;
+CREATE SEQUENCE IF NOT EXISTS bonuses_id_seq;
+CREATE SEQUENCE IF NOT EXISTS users_id_seq;
+CREATE SEQUENCE IF NOT EXISTS companies_id_seq;
+CREATE SEQUENCE IF NOT EXISTS user_company_company_id_seq;
+CREATE SEQUENCE IF NOT EXISTS user_company_user_id_seq;
+
+CREATE TABLE users
+(
+    id        serial PRIMARY KEY,
+    username  text,
+    password  text,
+    name      text,
+    surname   text,
+    email     text,
+    country   text,
+    active    bool,
+    user_role text
+);
+
+CREATE TABLE companies
+(
+    id        serial PRIMARY KEY,
+    name      text,
+    amount    bigint,
+    collected bigint,
+    info      text,
+    type      text,
+    dead_line date
+
+);
+
+CREATE TABLE bonuses
+(
+    id         serial PRIMARY KEY,
+    price      int,
+    user_id    int,
+    company_id int,
+    name       text,
+    info       text,
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (company_id) REFERENCES companies (id)
+);
+
+CREATE TABLE user_company
+(
+    user_id    serial,
+    company_id serial,
+    PRIMARY KEY (user_id, company_id),
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (company_id) REFERENCES companies (id)
+);
