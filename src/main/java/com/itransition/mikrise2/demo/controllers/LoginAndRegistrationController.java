@@ -1,25 +1,26 @@
 package com.itransition.mikrise2.demo.controllers;
 
-import com.itransition.mikrise2.demo.entities.Bonus;
-import com.itransition.mikrise2.demo.entities.Company;
-import com.itransition.mikrise2.demo.entities.User;
+import com.itransition.mikrise2.demo.entities.*;
 import com.itransition.mikrise2.demo.entities.enums.CompanyType;
 import com.itransition.mikrise2.demo.entities.enums.UserRole;
 import com.itransition.mikrise2.demo.repositories.CompanyRepository;
+import com.itransition.mikrise2.demo.repositories.UserRepository;
 import com.itransition.mikrise2.demo.services.UserEditingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.security.Principal;
+import java.util.*;
 
 @Controller
 public class LoginAndRegistrationController {
     @Autowired
     private CompanyRepository companyRepository;
+
+    @Autowired
+    private UserRepository userRepository;
     //TODO
     //TODO
     //TODO
@@ -48,6 +49,23 @@ public class LoginAndRegistrationController {
         company.setCompanyType(CompanyType.TECHNOLOGIES);
         company.setInfo("this is my Company");
         company.setName("MyCompany");
+
+
+        var post = new Post();
+        post.setText("Post text");
+        Comment comment = new Comment();
+        Comment comment1 = new Comment();
+        comment.setText("comment text");
+        comment1.setText("comment1 text");
+
+
+        var user21 = userRepository.findById(1L);
+
+        comment.setUser(user21.get());
+
+
+        post.addComment(comment);
+        post.addComment(comment1);
 //
 //        Company company1 = new Company();
 //        company1.setAmountToCollect(10001L);
@@ -65,12 +83,16 @@ public class LoginAndRegistrationController {
 //        userHTML.addBonus(bonus1);
         company.addBonus(bonus1);
         bonus1.setCompany(company);
+
+        company.addPost(post);
+
         companyRepository.save(company);
 //        userHTML.addCompany(company);
 //        userHTML.addBonus(bonus1);
 //        userHTML.addCompany(company1);
 //        userHTML.getBonuses().add(bonus);
         userHTML.setUserRole(UserRole.USER);
+
 
         if (userEditingService.saveUser(userHTML))
             return "redirect:/login";

@@ -6,4 +6,8 @@ public interface UserEditingService {
 
     boolean saveUser(User user);
 
+    boolean updateUser(User user);
+
+    User getUserByUserName(String username);
+
 }

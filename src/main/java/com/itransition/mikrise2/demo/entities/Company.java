@@ -35,6 +35,9 @@ public class Company {
     private List<Bonus> bonuses;
     @Column(name = "dead_line")
     private Date finishDate;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "company_id")
+    private List<Post> posts;
 
     public void addUser(User user) {
         if (users == null)
@@ -46,6 +49,12 @@ public class Company {
         if (bonuses == null)
             bonuses = new ArrayList<>();
         bonuses.add(bonus);
+    }
+
+    public void addPost(Post post) {
+        if (posts == null)
+            posts = new ArrayList<>();
+        posts.add(post);
     }
 
 }

@@ -140,7 +140,9 @@
                                     </select>
                                 </div>
                                 <div class="col align-self-center text-center">
-                                    <button class="btn btn-sm btn-light">new Company</button>
+                                    <form th:action="@{/creating-company}" th:method="GET">
+                                        <button class="btn btn-sm btn-light">new Company</button>
+                                    </form>
                                 </div>
                                 <div class="col align-self-center text-center">
                                     <button class="btn btn-sm btn-light">delete</button>

@@ -29,7 +29,7 @@ public class User implements UserDetails {
     private String country;
     private boolean active;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "user_company", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "company_id"))
     private List<Company> companies;
 
