@@ -44,7 +44,6 @@ public class LoginAndRegistrationController {
     }
 
     @PostMapping("/registration")
-//    @ResponseBody
     public String acceptRegistration(User userHTML, @RequestParam("file") MultipartFile file, Map<String, Object> model) {
         userHTML.setActive(true);
         userHTML.setUserRole(UserRole.USER);

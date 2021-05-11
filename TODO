@@ -1,7 +1,8 @@
 1) тип загрузки бонусов(Eager или Lazy)
 2) добавление компании через пользователя???
-
-
+3)использовать или репозиторий или cascade
+4)уникальность имён компаний
+5)redirect if user not founded
 
 DROP TABLE IF EXISTS bonuses;
 DROP TABLE IF EXISTS comments;

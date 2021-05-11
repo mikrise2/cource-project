@@ -34,13 +34,6 @@ public class UserPageController {
     private final UserRepository userRepository;
 
 
-    private final CompanyRepository companyRepository;
-    //TODO
-
-    private final UserEditingService userEditingService;
-
-    private final CloudinaryService cloudinaryService;
-
 
     @GetMapping("/{username:^(?!login).+}")
     public String getUserPage(@PathVariable String username, Map<String, Object> model) {
@@ -48,45 +41,6 @@ public class UserPageController {
         var user = userRepository.findByUsername(username);
         model.put("user", Objects.requireNonNullElseGet(user, User::new));
         return "user";
-
-    }
-
-    @GetMapping("/creating-company")
-    public String getCreatingCompanyPage() {
-        return "createCompany";
-    }
-
-    @PostMapping("/creating-company")
-    @ResponseBody
-    public String createCompany(Principal principal, Company company, @RequestParam("companyTypeString") String companyTypeStr, @RequestParam("finishDateString") String finishDateStr, @RequestParam("file") MultipartFile file) {
-        System.out.println(finishDateStr);
-        Date date = new Date();
-        try {
-            date = new SimpleDateFormat("yyyy-MM-dd").parse(finishDateStr);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        company.setFinishDate(date);
-        company.setCompanyType(CompanyType.valueOf(companyTypeStr.toUpperCase()));
-
-
-        System.out.println(principal.getName());
-
-        String url = cloudinaryService.uploadFile(file);
-        company.setPhotoUrl(url);
-        companyRepository.save(company);
-
-
-        var user = userEditingService.getUserByUserName(principal.getName());
-        user.addCompany(company);
-        userEditingService.updateUser(user);
-
-
-        System.out.println(company);
-
-
-        //TODO
-        return "main";
 
     }
 
