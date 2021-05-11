@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1 class="text-center">Create Company</h1>
-<form class="container-md mt-5" th:action="@{/creating-company}" method="post">
+<form class="container-md mt-5" th:action="@{/creating-company}" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label for="inputCompanyName">Company name</label>
         <input type="text" class="form-control" id="inputCompanyName" placeholder="company name" name="name">
@@ -38,7 +38,7 @@
     <div class="form-group">
         <label for="inputImage">Company Image</label>
         <div id="inputImage" class="file-upload-wrapper">
-            <input type="file" id="input-file-now" class="file-upload"/>
+            <input type="file" id="input-file-now" class="file-upload" name="file"/>
         </div>
     </div>
     <button type="submit" class="btn btn-dark mt-3">Submit</button>

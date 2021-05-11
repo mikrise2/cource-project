@@ -39,6 +39,8 @@ public class Company {
     @JoinColumn(name = "company_id")
     private List<Post> posts;
 
+    private String photoUrl;
+
     public void addUser(User user) {
         if (users == null)
             users = new ArrayList<>();

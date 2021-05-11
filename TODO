@@ -34,7 +34,8 @@ CREATE TABLE users
     email     text,
     country   text,
     active    bool,
-    user_role text
+    user_role text,
+    photo_url text
 );
 
 CREATE TABLE companies
@@ -45,7 +46,8 @@ CREATE TABLE companies
     collected bigint,
     info      text,
     type      text,
-    dead_line date
+    dead_line date,
+    photo_url text
 
 );
 

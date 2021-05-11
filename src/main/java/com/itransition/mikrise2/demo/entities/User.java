@@ -28,6 +28,7 @@ public class User implements UserDetails {
     private String email;
     private String country;
     private boolean active;
+    private String photoUrl;
 
     @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "user_company", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "company_id"))
