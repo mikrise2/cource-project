@@ -27,24 +27,18 @@ public class Company {
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
     private CompanyType companyType;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_company", joinColumns = @JoinColumn(name = "company_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> users;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    @OneToMany(mappedBy = "company")
     private List<Bonus> bonuses;
     @Column(name = "dead_line")
     private Date finishDate;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "company_id")
     private List<Post> posts;
 
     private String photoUrl;
-
-    public void addUser(User user) {
-        if (users == null)
-            users = new ArrayList<>();
-        users.add(user);
-    }
 
     public void addBonus(Bonus bonus) {
         if (bonuses == null)

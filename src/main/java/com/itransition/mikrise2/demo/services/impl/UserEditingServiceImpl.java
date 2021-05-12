@@ -1,7 +1,9 @@
 package com.itransition.mikrise2.demo.services.impl;
 
 import com.itransition.mikrise2.demo.entities.User;
+import com.itransition.mikrise2.demo.repositories.CompanyRepository;
 import com.itransition.mikrise2.demo.repositories.UserRepository;
+import com.itransition.mikrise2.demo.services.CompanyEditingService;
 import com.itransition.mikrise2.demo.services.UserEditingService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserEditingServiceImpl implements UserEditingService {
     private final UserRepository userRepository;
+
+    private final CompanyEditingService companyEditingService;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -30,13 +34,19 @@ public class UserEditingServiceImpl implements UserEditingService {
     }
 
     @Override
-    public boolean updateUser(User user) {
+    public void updateUser(User user) {
         userRepository.save(user);
-        return false;
     }
 
     @Override
     public User getUserByUserName(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public void deleteUser(User user) {
+        user.getCompanies().forEach(companyEditingService::deleteCompany);
+        //TODO for bonuses same
+        userRepository.delete(user);
     }
 }

@@ -6,6 +6,7 @@ import com.itransition.mikrise2.demo.entities.enums.UserRole;
 import com.itransition.mikrise2.demo.repositories.CompanyRepository;
 import com.itransition.mikrise2.demo.repositories.UserRepository;
 import com.itransition.mikrise2.demo.services.CloudinaryService;
+import com.itransition.mikrise2.demo.services.CompanyEditingService;
 import com.itransition.mikrise2.demo.services.UserEditingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ import java.util.*;
 @Controller
 public class LoginAndRegistrationController {
     @Autowired
-    private CompanyRepository companyRepository;
+    private CompanyEditingService companyEditingService;
 
     @Autowired
     private UserRepository userRepository;
@@ -40,6 +41,10 @@ public class LoginAndRegistrationController {
 
     @GetMapping("/registration")
     public String getRegistrationPage() {
+//        var user = userEditingService.getUserByUserName("1");
+//        userEditingService.deleteUser(user);
+
+
         return "registration";
     }
 

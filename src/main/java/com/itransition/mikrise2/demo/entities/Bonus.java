@@ -20,7 +20,7 @@ public class Bonus {
     private String name;
     private String info;
     private Integer price;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
 }

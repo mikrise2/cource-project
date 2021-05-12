@@ -66,11 +66,12 @@ public class CompanyPageController {
             String url = cloudinaryService.uploadFile(file);
             company.setPhotoUrl(url);
         }
-        companyRepository.save(company);
 
 
         var user = userEditingService.getUserByUserName(principal.getName());
         user.addCompany(company);
+        company.setUser(user);
+        companyRepository.save(company);
         userEditingService.updateUser(user);
 
 
@@ -85,7 +86,7 @@ public class CompanyPageController {
     public String getUpdateCompanyPage(@PathVariable Company company, Map<String, Object> model) {
         model.put("company", company);
         model.put("finishDate", new SimpleDateFormat("yyyy-MM-dd").format(company.getFinishDate()));
-        System.out.println( new SimpleDateFormat("yyyy-MM-dd").format(company.getFinishDate()));
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(company.getFinishDate()));
         return "editCompany";
     }
 }
