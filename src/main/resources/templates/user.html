@@ -12,8 +12,13 @@
     function redirect_to_company(id) {
         window.location.href = '../company-' + id
     }
+
     function redirect_to_update_company(id) {
         window.location.href = '../company-update-' + id
+    }
+
+    function redirect_to_create_company(id) {
+        window.location.href = '../creating-company'
     }
 </script>
 <div class="container" th:object="${user}">
@@ -143,18 +148,20 @@
                                     </select>
                                 </div>
                                 <div class="col align-self-center text-center">
-                                    <form th:action="@{/creating-company}" th:method="GET">
-                                        <button class="btn btn-sm btn-light">new Company</button>
-                                    </form>
+                                    <button class="btn btn-sm btn-light"
+                                            th:onclick="'redirect_to_update_company()'">new Company
+                                    </button>
                                 </div>
-                                <div class="col align-self-center text-center">
+                                <div class=" col align-self-center text-center
+                                            ">
                                     <button class="btn btn-sm btn-light">delete</button>
                                 </div>
                             </div>
                             <br>
                             <div th:each="company : ${user.getCompanies()}">
                                 <div class="row btn-custom rounded-3">
-                                    <div class="col align-self-center" th:onclick="'redirect_to_company('+${company.getId()}+')'">
+                                    <div class="col align-self-center"
+                                         th:onclick="'redirect_to_company('+${company.getId()}+')'">
                                         <img th:src="${company.getPhotoUrl()}"
                                              alt="Admin" class="rounded-3 " width="40">
                                     </div>
@@ -164,11 +171,14 @@
                                     </div>
                                     <div class="col align-self-center text-center">
                                         <label for="checker" class="visually-hidden">Search</label>
-                                        <input type="checkbox" id="checker" class="form-check-input">
+                                        <input type="checkbox" id="checker" th:name="idsOfSelectedForDelete"
+                                               th:value="${company.getId()}"
+                                               class="form-check-input">
                                     </div>
                                     <div class="col align-self-center text-center">
                                         <input type="image" th:src="@{images/edit.png}"
-                                               class="btn-image rounded-2" alt="search" width="20" th:onclick="'redirect_to_update_company('+${company.getId()}+')'">
+                                               class="btn-image rounded-2" alt="search" width="20"
+                                               th:onclick="'redirect_to_update_company('+${company.getId()}+')'">
                                     </div>
                                 </div>
                             </div>

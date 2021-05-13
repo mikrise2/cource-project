@@ -29,7 +29,7 @@ public class User implements UserDetails {
     private boolean active;
     private String photoUrl;
 
-    @OneToMany( mappedBy = "user")
+    @OneToMany(mappedBy = "user")
     private List<Company> companies;
 
 

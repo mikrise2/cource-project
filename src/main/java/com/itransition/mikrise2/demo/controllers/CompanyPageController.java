@@ -79,7 +79,7 @@ public class CompanyPageController {
 
 
         //TODO
-        return "editCompany";
+        return "redirect:/company-" + company.getId();
     }
 
     @GetMapping("/company-update-{company}")

@@ -34,7 +34,6 @@ public class UserPageController {
     private final UserRepository userRepository;
 
 
-
     @GetMapping("/{username:^(?!login).+}")
     public String getUserPage(@PathVariable String username, Map<String, Object> model) {
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -42,6 +41,11 @@ public class UserPageController {
         model.put("user", Objects.requireNonNullElseGet(user, User::new));
         return "user";
 
+    }
+
+    @PostMapping("/deleteCompanies")
+    public String deleteCompanies(@RequestParam("idsOfSelectedForDelete") String[] ids, @RequestParam("userId") Long id) {
+        return "redirect:/" + id;
     }
 
 }

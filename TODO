@@ -7,6 +7,12 @@
 7)стандартная картинка
 8)DTO
 9)добавить инфу про пользователей, которые зашли через соцсети
+10)вместо Principal имя
+11)отправлять сообщение из js в spring
+12)ajax
+13)бонусы
+14)markdown
+
 
 DROP TABLE IF EXISTS bonuses;
 DROP TABLE IF EXISTS comments;
