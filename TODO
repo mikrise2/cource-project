@@ -12,6 +12,8 @@
 12)ajax
 13)бонусы
 14)markdown
+15)ajax to header
+
 
 
 DROP TABLE IF EXISTS bonuses;

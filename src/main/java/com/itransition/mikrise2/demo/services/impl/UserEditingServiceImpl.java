@@ -1,11 +1,13 @@
 package com.itransition.mikrise2.demo.services.impl;
 
 import com.itransition.mikrise2.demo.entities.User;
+import com.itransition.mikrise2.demo.entities.enums.UserRole;
 import com.itransition.mikrise2.demo.repositories.CompanyRepository;
 import com.itransition.mikrise2.demo.repositories.UserRepository;
 import com.itransition.mikrise2.demo.services.CompanyEditingService;
 import com.itransition.mikrise2.demo.services.UserEditingService;
 import lombok.AllArgsConstructor;
+import org.hibernate.usertype.UserType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -48,5 +50,10 @@ public class UserEditingServiceImpl implements UserEditingService {
         user.getCompanies().forEach(companyEditingService::deleteCompany);
         //TODO for bonuses same
         userRepository.delete(user);
+    }
+
+    @Override
+    public UserRole getUserRoleByUserName(String username) {
+        return userRepository.findByUsername(username).getUserRole();
     }
 }

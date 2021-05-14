@@ -28,6 +28,39 @@ div.info {
     border-radius: .25rem;
 }
 
+div.scrollMenu {
+    background-color: #fcfcfc;
+    border: 1px solid rgba(142, 142, 142, 0.12);
+    border-radius: 8px;
+    height: 200px;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+
+div.scrollMenu div {
+    display: inline-block;
+    color: #000000;
+    text-align: center;
+    width: 30%;
+    text-decoration: none;
+}
+
+div.scrollMenu div:hover {
+    background-color: #d2d1d1;
+}
+
+div.scrollMenu div a {
+    font-weight: bold;
+}
+
+
+div.scrollMenu div img{
+    width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+}
+
 
 /*a*/
 
@@ -115,4 +148,9 @@ div.info {
     .modal-content {
         width: 100%;
     }
+}
+
+/*for active modal window*/
+.modal-backdrop {
+    z-index: -1;
 }

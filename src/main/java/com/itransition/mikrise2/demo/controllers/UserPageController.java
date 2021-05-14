@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,8 +34,10 @@ public class UserPageController {
     //TODO
     private final UserRepository userRepository;
 
+    private final UserEditingService userEditingService;
 
-    @GetMapping("/{username:^(?!login).+}")
+
+    @GetMapping("/{username:^(?!login|logout).+}")
     public String getUserPage(@PathVariable String username, Map<String, Object> model) {
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         var user = userRepository.findByUsername(username);
@@ -46,6 +49,14 @@ public class UserPageController {
     @PostMapping("/deleteCompanies")
     public String deleteCompanies(@RequestParam("idsOfSelectedForDelete") String[] ids, @RequestParam("userId") Long id) {
         return "redirect:/" + id;
+    }
+
+    @PostMapping("api/user")
+    @ResponseBody
+    public String getCurrentUser(Principal principal) {
+        if (principal != null)
+            return userEditingService.getUserRoleByUserName(principal.getName()).toString();
+        return "NULL";
     }
 
 }

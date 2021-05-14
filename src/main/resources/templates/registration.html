@@ -7,6 +7,8 @@
           integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 </head>
 <body>
+<div role="navigation" th:replace="includes/header :: header">
+</div>
 <h1 class="text-center">Registration</h1>
 <form class="container-md mt-5" th:action="@{/registration}" method="post" enctype="multipart/form-data">
     <div class="form-group">

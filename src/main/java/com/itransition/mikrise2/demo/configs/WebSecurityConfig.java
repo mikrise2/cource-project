@@ -36,9 +36,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                .logout()
+                .and()
                 .authorizeRequests()
-                .antMatchers("/login", "/registration", "/oauth/**", "/css/**", "/images/**").permitAll()
-                .anyRequest().authenticated()
+//                .antMatchers("/login", "/1", "/api/**", "/registration", "/oauth/**", "/js/**", "/css/**", "/images/**").permitAll()
+//                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -49,13 +51,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .userInfoEndpoint()
                 .userService(oauthUserService)
-                .and().successHandler((request, response, authentication) -> {
+                .and()
+                .successHandler((request, response, authentication) -> {
 
-            CustomOAuth2User oauthUser = (CustomOAuth2User) authentication.getPrincipal();
-            userDetailsServiceImpl.processOAuthPostLogin(oauthUser.getName());
+                    CustomOAuth2User oauthUser = (CustomOAuth2User) authentication.getPrincipal();
+                    userDetailsServiceImpl.processOAuthPostLogin(oauthUser.getName());
 
-            response.sendRedirect("/feed");
-        })
+                    response.sendRedirect("/feed");
+                })
                 .and()
                 .csrf()
                 .disable();

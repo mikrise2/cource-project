@@ -26,6 +26,7 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-client', version: '2.4.5'
 
     implementation group: 'org.webjars', name: 'bootstrap', version: '5.0.0-beta3'
+    implementation group: 'org.webjars', name: 'jquery', version: '2.2.4'
 
     implementation('com.cloudinary:cloudinary-http44:1.5.0')
 

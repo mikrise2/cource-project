@@ -9,6 +9,8 @@
     <link rel="stylesheet" th:href="@{css/companyPage.css}">
 </head>
 <body>
+<div role="navigation" th:replace="includes/header :: header">
+</div>
 <div th:object="${company}">
     <div class="container">
         <div class="main-body">
@@ -66,7 +68,8 @@
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">Category</h6>
                                 </div>
-                                <div class="col-sm-9 text-secondary text-center" th:text="${company.getCompanyType().getValue()}">
+                                <div class="col-sm-9 text-secondary text-center"
+                                     th:text="${company.getCompanyType().getValue()}">
                                 </div>
                             </div>
                             <hr>
@@ -93,7 +96,8 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-2 align-self-center">
-                                    <h6 class="text-end text-center" th:text="${company.getAmountToCollect()}">1231312</h6>
+                                    <h6 class="text-end text-center" th:text="${company.getAmountToCollect()}">
+                                        1231312</h6>
                                 </div>
                             </div>
                         </div>
@@ -101,7 +105,17 @@
 
                     <div class="card mb-3">
                         <div class="card-body">
-                            <h4 class="d-flex align-items-center mb-3">Gallery</h4>
+                            <div class="row">
+                                <div class="col">
+                                    <h4 class="d-flex align-items-center mb-3">Gallery</h4>
+                                </div>
+                                <div class="col text-end">
+                                    <button type="button" id="addPhotoBtn" class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#addPhoto">
+                                        add photo
+                                    </button>
+                                </div>
+                            </div>
                             <div class="container">
                                 <div class="row">
                                     <div class="scrollMenu">
@@ -287,6 +301,28 @@
         <span class="close">&times;</span>
         <img class="modal-content" id="img01" alt="img">
         <div id="caption"></div>
+    </div>
+
+
+    <div class="modal fade" id="addPhoto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">adding photo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="photoFile" class="form-label">insert photo file here</label>
+                        <input class="form-control" type="file" id="photoFile">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">add file</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script th:src="@{js/companyPage.js}"></script>
