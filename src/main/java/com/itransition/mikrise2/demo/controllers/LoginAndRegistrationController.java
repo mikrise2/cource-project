@@ -8,6 +8,7 @@ import com.itransition.mikrise2.demo.repositories.UserRepository;
 import com.itransition.mikrise2.demo.services.CloudinaryService;
 import com.itransition.mikrise2.demo.services.CompanyEditingService;
 import com.itransition.mikrise2.demo.services.UserEditingService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.security.Principal;
 import java.util.*;
 
+@RequiredArgsConstructor
 @Controller
 public class LoginAndRegistrationController {
     @Autowired
@@ -34,10 +36,6 @@ public class LoginAndRegistrationController {
     //TODO
 
     private final UserEditingService userEditingService;
-
-    public LoginAndRegistrationController(UserEditingService userEditingService) {
-        this.userEditingService = userEditingService;
-    }
 
     @GetMapping("/registration")
     public String getRegistrationPage() {

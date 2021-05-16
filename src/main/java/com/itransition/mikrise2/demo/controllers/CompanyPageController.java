@@ -10,6 +10,7 @@ import com.itransition.mikrise2.demo.services.CloudinaryService;
 import com.itransition.mikrise2.demo.services.CompanyEditingService;
 import com.itransition.mikrise2.demo.services.UserEditingService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Controller
 public class CompanyPageController {
     //TODO

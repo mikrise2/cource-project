@@ -2,6 +2,7 @@ package com.itransition.mikrise2.demo.controllers;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.itransition.mikrise2.demo.Dto.UserHeaderDto;
 import com.itransition.mikrise2.demo.entities.Company;
 import com.itransition.mikrise2.demo.entities.User;
 import com.itransition.mikrise2.demo.entities.enums.CompanyType;
@@ -9,7 +10,9 @@ import com.itransition.mikrise2.demo.repositories.CompanyRepository;
 import com.itransition.mikrise2.demo.repositories.UserRepository;
 import com.itransition.mikrise2.demo.services.CloudinaryService;
 import com.itransition.mikrise2.demo.services.UserEditingService;
+import com.itransition.mikrise2.demo.services.UserTransferService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,13 +31,15 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Controller
 public class UserPageController {
     //TODO
     private final UserRepository userRepository;
 
     private final UserEditingService userEditingService;
+
+    private final UserTransferService userTransferService;
 
 
     @GetMapping("/{username:^(?!login|logout).+}")
@@ -53,10 +58,10 @@ public class UserPageController {
 
     @GetMapping("api/user")
     @ResponseBody
-    public String getCurrentUser(Principal principal) {
+    public UserHeaderDto getCurrentUser(Principal principal) {
         if (principal != null)
-            return userEditingService.getUserRoleByUserName(principal.getName()).toString();
-        return "NULL";
+            return userTransferService.getUserHeaderDto(userEditingService.getUserByUserName(principal.getName()));
+        return null;
     }
 
 }

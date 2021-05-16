@@ -9,31 +9,28 @@
 <body>
 <div th:fragment="header">
     <header class="p-2 bg-secondary text-white">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
-                </a>
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                <img th:src="@{images/logo.png}" alt="logo" width="80" height="36">
+            </a>
 
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">About</a></li>
-                </ul>
+            <ul id="navbar" class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="/" class="nav-link px-2 text-white">Main page</a></li>
 
-                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 mt-1">
-                    <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
-                </form>
+            </ul>
 
-                <div id="auth" class="text-end">
-                </div>
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 mt-1">
+                <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+            </form>
+
+            <div id="auth" class="text-end">
             </div>
+        </div>
     </header>
     <script type="text/javascript"
             src="webjars/jquery/2.2.4/jquery.min.js"></script>
 
-    <script type="text/javascript" th:src="@{js/navbar.js}"></script>
+    <script type="text/javascript" th:src="@{js/header.js}"></script>
 
 </div>
 </body>
