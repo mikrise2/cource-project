@@ -1,5 +1,6 @@
 package com.itransition.mikrise2.demo.entities;
 
+import com.itransition.mikrise2.demo.model.BonusCreatingModel;
 import lombok.*;
 import org.w3c.dom.stylesheets.LinkStyle;
 
@@ -19,8 +20,15 @@ public class Bonus {
     private Long id;
     private String name;
     private String info;
-    private Integer price;
+    private Long price;
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
+
+    public Bonus(BonusCreatingModel bonusCreatingModel, Company company) {
+        this.name = bonusCreatingModel.getName();
+        this.info = bonusCreatingModel.getInfo();
+        this.price = bonusCreatingModel.getPrice();
+        this.company = company;
+    }
 }

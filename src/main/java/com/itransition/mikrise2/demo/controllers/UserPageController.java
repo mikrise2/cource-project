@@ -51,7 +51,7 @@ public class UserPageController {
         return "redirect:/" + id;
     }
 
-    @PostMapping("api/user")
+    @GetMapping("api/user")
     @ResponseBody
     public String getCurrentUser(Principal principal) {
         if (principal != null)

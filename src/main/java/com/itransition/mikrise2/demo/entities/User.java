@@ -33,8 +33,10 @@ public class User implements UserDetails {
     private List<Company> companies;
 
 
-    @OneToMany
-    @JoinColumn(name = "user_id")
+    @ManyToMany
+    @JoinTable(name = "user_bonus",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "bonus_id")})
     private List<Bonus> bonuses;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;

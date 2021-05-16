@@ -10,6 +10,7 @@ import java.util.List;
 
 @Setter
 @Getter
+//@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -30,7 +31,7 @@ public class Company {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", cascade = {CascadeType.MERGE})
     private List<Bonus> bonuses;
     @Column(name = "dead_line")
     private Date finishDate;

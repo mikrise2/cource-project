@@ -2,7 +2,7 @@ get_user()
 
 function get_user() {
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: "/api/user",
         dataType: 'text',
         cache: false,

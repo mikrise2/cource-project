@@ -1,17 +1,17 @@
 package com.itransition.mikrise2.demo.controllers;
 
+import com.itransition.mikrise2.demo.entities.Bonus;
 import com.itransition.mikrise2.demo.entities.Company;
 import com.itransition.mikrise2.demo.entities.enums.CompanyType;
+import com.itransition.mikrise2.demo.model.BonusCreatingModel;
 import com.itransition.mikrise2.demo.repositories.CompanyRepository;
 import com.itransition.mikrise2.demo.repositories.UserRepository;
 import com.itransition.mikrise2.demo.services.CloudinaryService;
+import com.itransition.mikrise2.demo.services.CompanyEditingService;
 import com.itransition.mikrise2.demo.services.UserEditingService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
@@ -32,13 +32,15 @@ public class CompanyPageController {
 
     private final UserEditingService userEditingService;
 
+    private final CompanyEditingService companyEditingService;
+
     private final CloudinaryService cloudinaryService;
 
 
     @GetMapping("/company-{company}")
     public String getCompanyPage(@PathVariable Company company, Map<String, Object> model) {
 //        var company = companyRepository.findById(companyId)
-        System.out.println(company);
+        System.out.println(company.getBonuses());
         model.put("company", company);
         return "company";
     }
@@ -89,4 +91,17 @@ public class CompanyPageController {
         System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(company.getFinishDate()));
         return "editCompany";
     }
+
+
+    @PutMapping("/api/bonus")
+    @ResponseBody
+    public String addBonus(@RequestBody BonusCreatingModel bonusCreatingModel) {
+
+        companyEditingService.addBonus(bonusCreatingModel);
+        System.out.println(bonusCreatingModel);
+        return "OK";
+
+    }
+
+
 }

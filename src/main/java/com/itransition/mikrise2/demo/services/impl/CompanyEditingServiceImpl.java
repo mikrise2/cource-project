@@ -1,6 +1,8 @@
 package com.itransition.mikrise2.demo.services.impl;
 
+import com.itransition.mikrise2.demo.entities.Bonus;
 import com.itransition.mikrise2.demo.entities.Company;
+import com.itransition.mikrise2.demo.model.BonusCreatingModel;
 import com.itransition.mikrise2.demo.repositories.CompanyRepository;
 import com.itransition.mikrise2.demo.services.CompanyEditingService;
 import lombok.AllArgsConstructor;
@@ -30,5 +32,15 @@ public class CompanyEditingServiceImpl implements CompanyEditingService {
     @Override
     public Company getCompanyById(Long id) {
         return companyRepository.findById(id).isPresent() ? companyRepository.findById(id).get() : null;
+    }
+
+    @Override
+    public void addBonus(BonusCreatingModel bonusCreatingModel) {
+        System.out.println(bonusCreatingModel.getCompanyName());
+        var company = companyRepository.findByName(bonusCreatingModel.getCompanyName());
+        var bonus =new Bonus(bonusCreatingModel, company);
+        System.out.println(bonus);
+        company.addBonus(bonus);
+        companyRepository.save(company);
     }
 }
