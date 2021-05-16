@@ -8,10 +8,10 @@
     <link rel="stylesheet" th:href="@{css/userPage.css}">
     <link rel="stylesheet" th:href="@{css/companyPage.css}">
 </head>
-<body>
+<body th:object="${company}">
 <div role="navigation" th:replace="includes/header :: header">
 </div>
-<div th:object="${company}">
+<div>
     <div class="container">
         <div class="main-body">
             <div class="row gutters-md">
@@ -122,32 +122,24 @@
                             </div>
                             <div class="container">
                                 <div class="row">
-                                    <div class="scrollMenu">
-                                        <div>
-                                            <img id="myImg" class="work-modals"
-                                                 src="http://madebymunsters.github.io/Lannister/img/blocitoff.png"
-                                                 alt="1">
+                                    <div id="photos" class="scrollMenu">
+                                        <div th:each="photoUrl : ${company.photoUrls}">
+                                            <img class="work-modals picture"
+                                                 th:src="${photoUrl}"
+                                                 th:photoUrlParameter="${photoUrl}"
+                                                 onclick="enlarge_photo(this.getAttribute('photoUrlParameter'));"
+                                                 alt="photo">
                                         </div>
-                                        <div>
-                                            <img class="work-modals"
-                                                 src="http://madebymunsters.github.io/Lannister/img/blocitoff.png"
-                                                 alt="1">
-                                        </div>
-                                        <div>
-                                            <img class="work-modals"
-                                                 src="http://madebymunsters.github.io/Lannister/img/blocitoff.png"
-                                                 alt="1">
-                                        </div>
-                                        <div>
-                                            <img class="work-modals"
-                                                 src="http://madebymunsters.github.io/Lannister/img/blocitoff.png"
-                                                 alt="1">
-                                        </div>
-                                        <div>
-                                            <img class="work-modals"
-                                                 src="https://images.unsplash.com/photo-1554080353-a576cf803bda?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGhvdG98ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80"
-                                                 alt="3">
-                                        </div>
+                                        <!--                                        <div>-->
+                                        <!--                                            <img class="work-modals"-->
+                                        <!--                                                 src="http://madebymunsters.github.io/Lannister/img/blocitoff.png"-->
+                                        <!--                                                 alt="1">-->
+                                        <!--                                        </div>-->
+                                        <!--                                        <div>-->
+                                        <!--                                            <img class="work-modals"-->
+                                        <!--                                                 src="https://images.unsplash.com/photo-1554080353-a576cf803bda?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGhvdG98ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80"-->
+                                        <!--                                                 alt="3">-->
+                                        <!--                                        </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -234,31 +226,34 @@
             </div>
         </div>
     </div>
-    <div id="myModal" class="modal">
+    <div id="photoShowingModal" class="modal">
         <span class="close">&times;</span>
-        <img class="modal-content" id="img01" alt="img">
-        <div id="caption"></div>
+        <img class="modal-content" id="modalPhoto" alt="img">
     </div>
 
 
     <div class="modal fade" id="addPhoto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addPhotoModalLabel">adding photo</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="photoFile" class="form-label">insert photo file here</label>
-                        <input class="form-control" type="file" id="photoFile">
+                <form th:action="@{/adding-photo}" th:method="POST" enctype="multipart/form-data">
+                    <input type="hidden" th:value="${company.id}" name="companyId">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addPhotoModalLabel">adding photo</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">add file</button>
-                </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="photoFile" class="form-label">insert photo file here</label>
+                            <input class="form-control" type="file" id="photoFile" name="file">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">add file</button>
+                    </div>
+                </form>
             </div>
+
         </div>
     </div>
 
@@ -284,12 +279,12 @@
                         <label for="bonusPrice">price</label>
                         <input type="number" class="form-control" id="bonusPrice" placeholder="price"
                                name="amountToCollect"
-                               th:value="${company} ? ${company.getAmountToCollect()}">
+                               th:value="${company} ? ${company.amountToCollect}">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" th:companyName="${company.getName()}"
+                    <button type="button" th:companyName="${company.name}"
                             onclick="add_bonus(this.getAttribute('companyName'));" class="btn btn-primary">add bonus
                     </button>
                 </div>
@@ -297,9 +292,8 @@
         </div>
     </div>
 
-
 </div>
-<script th:src="@{js/companyPage.js}"></script>
+<script th:inline="javascript" th:src="@{js/companyPage.js}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
         crossorigin="anonymous"></script>

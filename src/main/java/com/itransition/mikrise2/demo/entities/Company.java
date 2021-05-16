@@ -4,6 +4,7 @@ import com.itransition.mikrise2.demo.entities.enums.CompanyType;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,6 +39,8 @@ public class Company {
     @OneToMany
     @JoinColumn(name = "company_id")
     private List<Post> posts;
+    @ElementCollection
+    private List<String> photoUrls;
 
     private String photoUrl;
 
@@ -51,6 +54,12 @@ public class Company {
         if (posts == null)
             posts = new ArrayList<>();
         posts.add(post);
+    }
+
+    public void addPhoto(String photoUrl) {
+        if (photoUrls == null)
+            photoUrls = new ArrayList<>();
+        photoUrls.add(photoUrl);
     }
 
 }

@@ -18,8 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Controller
@@ -42,6 +41,8 @@ public class CompanyPageController {
     public String getCompanyPage(@PathVariable Company company, Map<String, Object> model) {
 //        var company = companyRepository.findById(companyId)
         System.out.println(company.getBonuses());
+//       company.addPhoto("https://www.imgonline.com.ua/examples/bee-on-daisy.jpg");
+//        companyRepository.save(company);
         model.put("company", company);
         return "company";
     }
@@ -93,14 +94,24 @@ public class CompanyPageController {
         return "editCompany";
     }
 
+    @PostMapping("/adding-photo")
+    public String addPhoto(@RequestParam("file") MultipartFile file, @RequestParam("companyId") Long companyId) {
+        var company = companyEditingService.getCompanyById(companyId);
+        if (!file.isEmpty()) {
+            String url = cloudinaryService.uploadFile(file);
+            company.addPhoto(url);
+            companyEditingService.updateCompany(company);
+        }
+        return "redirect:/company-" + companyId;
+    }
 
-    @PutMapping("/api/bonus")
+
+    @PostMapping("/api/bonus")
     @ResponseBody
-    public String addBonus(@RequestBody BonusCreatingModel bonusCreatingModel) {
+    public void addBonus(@RequestBody BonusCreatingModel bonusCreatingModel) {
 
         companyEditingService.addBonus(bonusCreatingModel);
         System.out.println(bonusCreatingModel);
-        return "OK";
 
     }
 
