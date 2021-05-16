@@ -3,8 +3,11 @@ package com.itransition.mikrise2.demo.services.impl;
 import com.itransition.mikrise2.demo.entities.Bonus;
 import com.itransition.mikrise2.demo.entities.Company;
 import com.itransition.mikrise2.demo.model.BonusCreatingModel;
+import com.itransition.mikrise2.demo.model.PostCreatingModel;
 import com.itransition.mikrise2.demo.repositories.CompanyRepository;
+import com.itransition.mikrise2.demo.services.BonusTransferService;
 import com.itransition.mikrise2.demo.services.CompanyEditingService;
+import com.itransition.mikrise2.demo.services.PostTransferService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +15,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class CompanyEditingServiceImpl implements CompanyEditingService {
     private final CompanyRepository companyRepository;
+
+    private final BonusTransferService bonusTransferService;
+
+    private final PostTransferService postTransferService;
 
     @Override
     public void deleteCompany(Company company) {
@@ -36,11 +43,17 @@ public class CompanyEditingServiceImpl implements CompanyEditingService {
 
     @Override
     public void addBonus(BonusCreatingModel bonusCreatingModel) {
-        System.out.println(bonusCreatingModel.getCompanyName());
         var company = companyRepository.findByName(bonusCreatingModel.getCompanyName());
-        var bonus =new Bonus(bonusCreatingModel, company);
-        System.out.println(bonus);
+        var bonus = bonusTransferService.getBonus(bonusCreatingModel, company);
         company.addBonus(bonus);
+        companyRepository.save(company);
+    }
+
+    @Override
+    public void addPost(PostCreatingModel postCreatingModel) {
+        var company = companyRepository.findByName(postCreatingModel.getCompanyName());
+        var post = postTransferService.getPost(postCreatingModel);
+        company.addPost(post);
         companyRepository.save(company);
     }
 }

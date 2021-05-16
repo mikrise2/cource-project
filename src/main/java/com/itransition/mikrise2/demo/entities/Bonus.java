@@ -25,10 +25,4 @@ public class Bonus {
     @JoinColumn(name = "company_id")
     private Company company;
 
-    public Bonus(BonusCreatingModel bonusCreatingModel, Company company) {
-        this.name = bonusCreatingModel.getName();
-        this.info = bonusCreatingModel.getInfo();
-        this.price = bonusCreatingModel.getPrice();
-        this.company = company;
-    }
 }

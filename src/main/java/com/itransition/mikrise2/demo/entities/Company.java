@@ -36,7 +36,7 @@ public class Company {
     private List<Bonus> bonuses;
     @Column(name = "dead_line")
     private Date finishDate;
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name = "company_id")
     private List<Post> posts;
     @ElementCollection

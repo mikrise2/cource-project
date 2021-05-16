@@ -130,16 +130,6 @@
                                                  onclick="enlarge_photo(this.getAttribute('photoUrlParameter'));"
                                                  alt="photo">
                                         </div>
-                                        <!--                                        <div>-->
-                                        <!--                                            <img class="work-modals"-->
-                                        <!--                                                 src="http://madebymunsters.github.io/Lannister/img/blocitoff.png"-->
-                                        <!--                                                 alt="1">-->
-                                        <!--                                        </div>-->
-                                        <!--                                        <div>-->
-                                        <!--                                            <img class="work-modals"-->
-                                        <!--                                                 src="https://images.unsplash.com/photo-1554080353-a576cf803bda?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGhvdG98ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80"-->
-                                        <!--                                                 alt="3">-->
-                                        <!--                                        </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -148,77 +138,108 @@
                     <div class="col mb-3">
                         <div class="card h-100">
                             <div class="card-body">
-                                <h4 class="d-flex align-items-center mb-3">Posts</h4>
-                                <div>
-                                    <div class="row comment">
-                                        <!--                                    <div class="col-sm-1">-->
-                                        <!--                                        <img class="rounded-circle" width="40" height="40"-->
-                                        <!--                                             src="https://images.unsplash.com/photo-1554080353-a576cf803bda?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGhvdG98ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80"-->
-                                        <!--                                             alt="photo">-->
-                                        <!--                                    </div>-->
-                                        <div class="col align-self-center">
-                                            <h5 class="d-flex">My name</h5>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-1">
-                                            </div>
-                                            <div class="col align-self-center">
-                                                <h6 class="fs-6">Apple (МФА: [ˈæp(ə)l], в переводе с англ. — «яблоко») —
-
-                                                    PetroChina
-                                                    (1,005 трлн долларов в ноябре 2007 года)[14].</h6>
-                                            </div>
-                                        </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <h4 class="d-flex align-items-center mb-3">Posts</h4>
                                     </div>
-
-
-                                    <div class="mx-5 row comment">
-                                        <div class="col-sm-1">
-                                            <img class="rounded-circle" width="30" height="30"
-                                                 src="https://images.unsplash.com/photo-1554080353-a576cf803bda?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGhvdG98ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80"
-                                                 alt="photo">
-                                        </div>
-                                        <div class="col align-self-center">
-                                            <h5 class="d-flex">My name</h5>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-1">
-                                            </div>
-                                            <div class="col align-self-center">
-                                                <h6 class="fs-6">Apple (МФА: [ˈæp(ə)l], в переводе с англ. — «яблоко») —
-                                                    американская корпорация,
-
-                                                    (1,005 трлн долларов в ноябре 2007 года)[14].</h6>
-                                            </div>
-                                        </div>
+                                    <div class="col text-end">
+                                        <button type="button" id="addPostButton" class="btn btn-primary"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#addPost">
+                                            add post
+                                        </button>
                                     </div>
-
-
                                 </div>
-                                <div>
-                                    <div class="row comment">
-                                        <!--                                    <div class="col-sm-1">-->
-                                        <!--                                        <img class="rounded-circle" width="40" height="40"-->
-                                        <!--                                             src="https://images.unsplash.com/photo-1554080353-a576cf803bda?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGhvdG98ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80"-->
-                                        <!--                                             alt="photo">-->
-                                        <!--                                    </div>-->
-                                        <div class="col align-self-center">
-                                            <h5 class="d-flex">My name</h5>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-1">
-                                            </div>
-                                            <div class="col align-self-center">
-                                                <h6 class="fs-6">Apple (МФА: [ˈæp(ə)l], в переводе с англ. — «яблоко») —
-                                                    американская корпорация,
-                                                    производитель персональных и планшетных компьютеров, аудиоплееров,
 
-                                                    PetroChina
-                                                    (1,005 трлн долларов в ноябре 2007 года)[14].</h6>
+
+
+                                <div id="posts">
+                                    <div th:each="post : ${company.posts}">
+                                        <div>
+                                            <div class="row comment">
+                                                <div class="col align-self-center">
+                                                    <h5 class="d-flex" th:text="${post.name}"></h5>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-1">
+                                                    </div>
+                                                    <div class="col align-self-center">
+                                                        <h6 class="fs-6" th:text="${post.text}"></h6>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+                                <!--                                    <div>-->
+                                <!--                                        <div class="row comment">-->
+                                <!--                                            <div class="col align-self-center">-->
+                                <!--                                                <h5 class="d-flex">My name</h5>-->
+                                <!--                                            </div>-->
+                                <!--                                            <div class="row">-->
+                                <!--                                                <div class="col-sm-1">-->
+                                <!--                                                </div>-->
+                                <!--                                                <div class="col align-self-center">-->
+                                <!--                                                    <h6 class="fs-6">Apple (МФА: [ˈæp(ə)l], в переводе с-->
+                                <!--                                                        англ. — «яблоко») —-->
+
+                                <!--                                                        PetroChina-->
+                                <!--                                                        (1,005 трлн долларов в ноябре 2007 года)[14].</h6>-->
+                                <!--                                                </div>-->
+                                <!--                                            </div>-->
+                                <!--                                        </div>-->
+                                <!--&lt;!&ndash;                                        <div class="mx-5 row comment">&ndash;&gt;-->
+                                <!--&lt;!&ndash;                                            <div class="col-sm-1">&ndash;&gt;-->
+                                <!--&lt;!&ndash;                                                <img class="rounded-circle" width="30" height="30"&ndash;&gt;-->
+                                <!--&lt;!&ndash;                                                     src="https://images.unsplash.com/photo-1554080353-a576cf803bda?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGhvdG98ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80"&ndash;&gt;-->
+                                <!--&lt;!&ndash;                                                     alt="photo">&ndash;&gt;-->
+                                <!--&lt;!&ndash;                                            </div>&ndash;&gt;-->
+                                <!--&lt;!&ndash;                                            <div class="col align-self-center">&ndash;&gt;-->
+                                <!--&lt;!&ndash;                                                <h5 class="d-flex">My name</h5>&ndash;&gt;-->
+                                <!--&lt;!&ndash;                                            </div>&ndash;&gt;-->
+                                <!--&lt;!&ndash;                                            <div class="row">&ndash;&gt;-->
+                                <!--&lt;!&ndash;                                                <div class="col-sm-1">&ndash;&gt;-->
+                                <!--&lt;!&ndash;                                                </div>&ndash;&gt;-->
+                                <!--&lt;!&ndash;                                                <div class="col align-self-center">&ndash;&gt;-->
+                                <!--&lt;!&ndash;                                                    <h6 class="fs-6">Apple (МФА: [ˈæp(ə)l], в переводе с&ndash;&gt;-->
+                                <!--&lt;!&ndash;                                                        англ. — «яблоко») —&ndash;&gt;-->
+                                <!--&lt;!&ndash;                                                        американская корпорация,&ndash;&gt;-->
+
+                                <!--&lt;!&ndash;                                                        (1,005 трлн долларов в ноябре 2007 года)[14].</h6>&ndash;&gt;-->
+                                <!--&lt;!&ndash;                                                </div>&ndash;&gt;-->
+                                <!--&lt;!&ndash;                                            </div>&ndash;&gt;-->
+                                <!--&lt;!&ndash;                                        </div>&ndash;&gt;-->
+                                <!--                                    </div>-->
+
+
+                                <!--                                    <div>-->
+                                <!--                                        <div class="row comment">-->
+                                <!--                                            &lt;!&ndash;                                    <div class="col-sm-1">&ndash;&gt;-->
+                                <!--                                            &lt;!&ndash;                                        <img class="rounded-circle" width="40" height="40"&ndash;&gt;-->
+                                <!--                                            &lt;!&ndash;                                             src="https://images.unsplash.com/photo-1554080353-a576cf803bda?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGhvdG98ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80"&ndash;&gt;-->
+                                <!--                                            &lt;!&ndash;                                             alt="photo">&ndash;&gt;-->
+                                <!--                                            &lt;!&ndash;                                    </div>&ndash;&gt;-->
+                                <!--                                            <div class="col align-self-center">-->
+                                <!--                                                <h5 class="d-flex">My name</h5>-->
+                                <!--                                            </div>-->
+                                <!--                                            <div class="row">-->
+                                <!--                                                <div class="col-sm-1">-->
+                                <!--                                                </div>-->
+                                <!--                                                <div class="col align-self-center">-->
+                                <!--                                                    <h6 class="fs-6">Apple (МФА: [ˈæp(ə)l], в переводе с-->
+                                <!--                                                        англ. — «яблоко») —-->
+                                <!--                                                        американская корпорация,-->
+                                <!--                                                        производитель персональных и планшетных компьютеров,-->
+                                <!--                                                        аудиоплееров,-->
+
+                                <!--                                                        PetroChina-->
+                                <!--                                                        (1,005 трлн долларов в ноябре 2007 года)[14].</h6>-->
+                                <!--                                                </div>-->
+                                <!--                                            </div>-->
+                                <!--                                        </div>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -253,7 +274,36 @@
                     </div>
                 </form>
             </div>
+        </div>
+    </div>
 
+
+    <div class="modal fade" id="addPost" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addPostModalLabel">adding post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <div class="form-group">
+                            <label for="postName">Post name</label>
+                            <input type="text" class="form-control" id="postName" placeholder="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="postText">post info</label>
+                            <textarea class="form-control" id="postText" placeholder="text" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" th:companyName="${company.name}"
+                            onclick="add_post(this.getAttribute('companyName'));" class="btn btn-primary">add post
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 

@@ -4,6 +4,7 @@ import com.itransition.mikrise2.demo.entities.Bonus;
 import com.itransition.mikrise2.demo.entities.Company;
 import com.itransition.mikrise2.demo.entities.enums.CompanyType;
 import com.itransition.mikrise2.demo.model.BonusCreatingModel;
+import com.itransition.mikrise2.demo.model.PostCreatingModel;
 import com.itransition.mikrise2.demo.repositories.CompanyRepository;
 import com.itransition.mikrise2.demo.repositories.UserRepository;
 import com.itransition.mikrise2.demo.services.CloudinaryService;
@@ -111,9 +112,16 @@ public class CompanyPageController {
     public void addBonus(@RequestBody BonusCreatingModel bonusCreatingModel) {
 
         companyEditingService.addBonus(bonusCreatingModel);
-        System.out.println(bonusCreatingModel);
 
     }
 
+
+    @PostMapping("/api/post")
+    @ResponseBody
+    public void addPost(@RequestBody PostCreatingModel postCreatingModel) {
+
+        companyEditingService.addPost(postCreatingModel);
+
+    }
 
 }

@@ -2,6 +2,7 @@ package com.itransition.mikrise2.demo.services;
 
 import com.itransition.mikrise2.demo.entities.Company;
 import com.itransition.mikrise2.demo.model.BonusCreatingModel;
+import com.itransition.mikrise2.demo.model.PostCreatingModel;
 
 public interface CompanyEditingService {
     void deleteCompany(Company company);
@@ -13,4 +14,6 @@ public interface CompanyEditingService {
     Company getCompanyById(Long id);
 
     void addBonus(BonusCreatingModel bonusCreatingModel);
+
+    void addPost(PostCreatingModel postCreatingModel);
 }

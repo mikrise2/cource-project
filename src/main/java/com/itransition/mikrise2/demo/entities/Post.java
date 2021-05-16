@@ -13,21 +13,22 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name="posts")
+@Table(name = "posts")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
     private String text;
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name = "post_id")
     private List<Comment> comments;
 
     private Date publicationDate;
 
 
-    public void addComment(Comment comment){
-        if(comments==null)
+    public void addComment(Comment comment) {
+        if (comments == null)
             comments = new ArrayList<>();
         comments.add(comment);
     }

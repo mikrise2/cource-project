@@ -37,3 +37,39 @@ function add_bonus(companyName) {
     });
 }
 
+function add_post(companyName) {
+    $('#addPost').modal('hide');
+    $('.modal-backdrop').hide();
+
+    let post = {
+        "name": $('#postName').val(),
+        "text": $('#postText').val(),
+        "companyName": companyName
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/api/post",
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(post),
+        cache: false,
+        timeout: 600000,
+        success: function () {
+            $('#posts').prepend('<div>\n' +
+                '                                        <div class="row comment">\n' +
+                '                                            <div class="col align-self-center">\n' +
+                '                                                <h5 class="d-flex">' + post.name + '</h5>\n' +
+                '                                            </div>\n' +
+                '                                            <div class="row">\n' +
+                '                                                <div class="col-sm-1">\n' +
+                '                                                </div>\n' +
+                '                                                <div class="col align-self-center">\n' +
+                '                                                    <h6 class="fs-6">' + post.text + '</h6>\n' +
+                '                                                </div>\n' +
+                '                                            </div>\n' +
+                '                                        </div>\n' +
+                '                                    </div>')
+        },
+    });
+}
+
