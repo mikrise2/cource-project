@@ -2,12 +2,9 @@ package com.itransition.mikrise2.demo.services.impl;
 
 import com.itransition.mikrise2.demo.entities.User;
 import com.itransition.mikrise2.demo.entities.enums.UserRole;
-import com.itransition.mikrise2.demo.repositories.CompanyRepository;
 import com.itransition.mikrise2.demo.repositories.UserRepository;
-import com.itransition.mikrise2.demo.services.CompanyEditingService;
 import com.itransition.mikrise2.demo.services.UserEditingService;
 import lombok.AllArgsConstructor;
-import org.hibernate.usertype.UserType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserEditingServiceImpl implements UserEditingService {
     private final UserRepository userRepository;
-
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
 
     @Override
     public boolean saveUser(User user) {

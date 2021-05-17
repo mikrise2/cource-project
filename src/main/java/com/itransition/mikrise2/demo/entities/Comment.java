@@ -18,12 +18,10 @@ public class Comment {
     private Long id;
     private String text;
     @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "user_id")
     private User user;
     @OneToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private LikeDislike like;
     @OneToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private LikeDislike dislike;
     private Date publicationDate;
-
 }

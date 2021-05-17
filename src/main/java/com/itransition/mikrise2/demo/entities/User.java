@@ -6,7 +6,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -28,15 +27,9 @@ public class User implements UserDetails {
     private String country;
     private boolean active;
     private String photoUrl;
-
-    @OneToMany(mappedBy = "user")
+    @OneToMany
     private List<Company> companies;
-
-
     @ManyToMany
-    @JoinTable(name = "user_bonus",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "bonus_id")})
     private List<Bonus> bonuses;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
@@ -76,15 +69,4 @@ public class User implements UserDetails {
         return username;
     }
 
-    public void addBonus(Bonus bonus) {
-        if (bonuses == null)
-            bonuses = new ArrayList<>();
-        bonuses.add(bonus);
-    }
-
-    public void addCompany(Company company) {
-        if (companies == null)
-            companies = new ArrayList<>();
-        companies.add(company);
-    }
 }

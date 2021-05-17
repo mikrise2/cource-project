@@ -3,7 +3,6 @@ package com.itransition.mikrise2.demo.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 
@@ -21,15 +20,6 @@ public class Post {
     private String name;
     private String text;
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE},fetch = FetchType.EAGER)
-    @JoinColumn(name = "post_id")
     private List<Comment> comments;
-
     private Date publicationDate;
-
-
-    public void addComment(Comment comment) {
-        if (comments == null)
-            comments = new ArrayList<>();
-        comments.add(comment);
-    }
 }

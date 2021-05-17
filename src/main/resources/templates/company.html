@@ -34,7 +34,7 @@
                         <div class="card-body">
                             <div class="ratio ratio-16x9">
                                 <iframe
-                                        src="https://www.youtube.com/embed/8u6iGpVQbOg" allowfullscreen></iframe>
+                                        th:src="${company.videoUrl}" allowfullscreen></iframe>
                             </div>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                             <div class="row">
                                 <h5 class="d-flex align-items-center mb-3">Tags</h5>
                                 <div class="info">
-                                    <h6>Education, myFirstCompany</h6>
+                                    <h6 th:text="${company.tags}"></h6>
                                 </div>
                             </div>
                         </div>
@@ -209,54 +209,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <!--                                    <div>-->
-                                <!--                                        <div class="row comment">-->
-                                <!--                                            <div class="col align-self-center">-->
-                                <!--                                                <h5 class="d-flex">My name</h5>-->
-                                <!--                                            </div>-->
-                                <!--                                            <div class="row">-->
-                                <!--                                                <div class="col-sm-1">-->
-                                <!--                                                </div>-->
-                                <!--                                                <div class="col align-self-center">-->
-                                <!--                                                    <h6 class="fs-6">Apple (МФА: [ˈæp(ə)l], в переводе с-->
-                                <!--                                                        англ. — «яблоко») —-->
-
-                                <!--                                                        PetroChina-->
-                                <!--                                                        (1,005 трлн долларов в ноябре 2007 года)[14].</h6>-->
-                                <!--                                                </div>-->
-                                <!--                                            </div>-->
-                                <!--                                        </div>-->
-                                <!--                                    </div>-->
-
-
-                                <!--                                    <div>-->
-                                <!--                                        <div class="row comment">-->
-                                <!--                                            &lt;!&ndash;                                    <div class="col-sm-1">&ndash;&gt;-->
-                                <!--                                            &lt;!&ndash;                                        <img class="rounded-circle" width="40" height="40"&ndash;&gt;-->
-                                <!--                                            &lt;!&ndash;                                             src="https://images.unsplash.com/photo-1554080353-a576cf803bda?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGhvdG98ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80"&ndash;&gt;-->
-                                <!--                                            &lt;!&ndash;                                             alt="photo">&ndash;&gt;-->
-                                <!--                                            &lt;!&ndash;                                    </div>&ndash;&gt;-->
-                                <!--                                            <div class="col align-self-center">-->
-                                <!--                                                <h5 class="d-flex">My name</h5>-->
-                                <!--                                            </div>-->
-                                <!--                                            <div class="row">-->
-                                <!--                                                <div class="col-sm-1">-->
-                                <!--                                                </div>-->
-                                <!--                                                <div class="col align-self-center">-->
-                                <!--                                                    <h6 class="fs-6">Apple (МФА: [ˈæp(ə)l], в переводе с-->
-                                <!--                                                        англ. — «яблоко») —-->
-                                <!--                                                        американская корпорация,-->
-                                <!--                                                        производитель персональных и планшетных компьютеров,-->
-                                <!--                                                        аудиоплееров,-->
-
-                                <!--                                                        PetroChina-->
-                                <!--                                                        (1,005 трлн долларов в ноябре 2007 года)[14].</h6>-->
-                                <!--                                                </div>-->
-                                <!--                                            </div>-->
-                                <!--                                        </div>-->
-                                <!--                                    </div>-->
-                                <!--                                </div>-->
                             </div>
                         </div>
                     </div>

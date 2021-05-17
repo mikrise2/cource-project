@@ -1,11 +1,8 @@
 package com.itransition.mikrise2.demo.entities;
 
-import com.itransition.mikrise2.demo.model.BonusCreatingModel;
 import lombok.*;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Setter
@@ -22,7 +19,5 @@ public class Bonus {
     private String info;
     private Long price;
     @ManyToOne
-    @JoinColumn(name = "company_id")
     private Company company;
-
 }

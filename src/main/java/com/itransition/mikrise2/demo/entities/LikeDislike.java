@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -21,12 +20,4 @@ public class LikeDislike {
     private Long quality;
     @ManyToMany
     private List<User> users;
-
-
-    public void addUser(User user) {
-        if (users == null)
-            users = new ArrayList<>();
-        users.add(user);
-    }
-
 }

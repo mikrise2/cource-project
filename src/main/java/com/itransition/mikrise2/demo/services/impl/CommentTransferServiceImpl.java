@@ -4,7 +4,6 @@ import com.itransition.mikrise2.demo.entities.Comment;
 import com.itransition.mikrise2.demo.entities.LikeDislike;
 import com.itransition.mikrise2.demo.model.CommentCreatingModel;
 import com.itransition.mikrise2.demo.services.CommentTransferService;
-import com.itransition.mikrise2.demo.services.UserEditingService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

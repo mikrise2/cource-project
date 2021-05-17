@@ -3,6 +3,7 @@ package com.itransition.mikrise2.demo.configs;
 import com.itransition.mikrise2.demo.OAuth2.CustomOAuth2User;
 import com.itransition.mikrise2.demo.OAuth2.CustomOAuth2UserService;
 import com.itransition.mikrise2.demo.services.impl.UserDetailsServiceImpl;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,21 +13,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-
+@AllArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
     private final UserDetailsServiceImpl userDetailsServiceImpl;
-
-
     private final CustomOAuth2UserService oauthUserService;
-
-
-    public WebSecurityConfig(UserDetailsServiceImpl userDetailsServiceImpl, CustomOAuth2UserService oauthUserService) {
-        this.userDetailsServiceImpl = userDetailsServiceImpl;
-        this.oauthUserService = oauthUserService;
-    }
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -39,8 +31,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .and()
                 .authorizeRequests()
-//                .antMatchers("/login", "/1", "/api/**", "/registration", "/oauth/**", "/js/**", "/css/**", "/images/**").permitAll()
-//                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")

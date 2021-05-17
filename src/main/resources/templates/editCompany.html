@@ -12,6 +12,7 @@
 <div th:object="${company}">
     <h1 class="text-center" th:text="${company} ?  'Edit Company' : 'Create Company'"></h1>
     <form class="container-md mt-5" th:action="@{/creating-company}" method="post" enctype="multipart/form-data">
+        <input type="hidden" th:value="${company.id}" name="companyId">
         <div class="form-group">
             <label for="inputCompanyName">Company name</label>
             <input type="text" class="form-control" id="inputCompanyName" placeholder="company name" name="name"
@@ -39,9 +40,19 @@
                    name="finishDateString" th:value="${company} ? ${finishDate}">
         </div>
         <div class="form-group">
+            <label for="inputUrlYouTubeVideo">url of YouTube video</label>
+            <input type="text" class="form-control" id="inputUrlYouTubeVideo" placeholder="YouTube video"
+                   name="youTubeUrl" th:value="${company} ? ${company.videoUrl}">
+        </div>
+        <div class="form-group">
+            <label for="inputTags">Tags</label>
+            <input type="text" class="form-control" id="inputTags" placeholder="tag1, tag2"
+                   name="tags" th:value="${company} ? ${company.tags}">
+        </div>
+        <div class="form-group">
             <label for="inputAmount">Amount of money to collect</label>
             <input type="number" class="form-control" id="inputAmount" placeholder="amount" name="amountToCollect"
-                   th:value="${company} ? ${company.getAmountToCollect()}">
+                   th:value="${company} ? ${company.amountToCollect}">
         </div>
         <div class="form-group">
             <label for="inputImage">Company Image</label>
@@ -51,15 +62,7 @@
         </div>
         <button type="submit" class="btn btn-dark mt-3">Submit</button>
     </form>
-    <div th:if="${error}!=null" class="container-md mt-2">
-        <div class="alert alert-danger" th:text="${error}">
-
-        </div>
-    </div>
 </div>
-
-<!--<p class="text-black-50 text-center" th:text="${text}"></p>-->
-<!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
         crossorigin="anonymous"></script>

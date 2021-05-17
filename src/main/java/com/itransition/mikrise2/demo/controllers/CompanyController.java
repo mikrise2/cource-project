@@ -1,17 +1,13 @@
 package com.itransition.mikrise2.demo.controllers;
 
-import com.itransition.mikrise2.demo.entities.Bonus;
 import com.itransition.mikrise2.demo.entities.Company;
 import com.itransition.mikrise2.demo.entities.enums.CompanyType;
 import com.itransition.mikrise2.demo.model.BonusCreatingModel;
 import com.itransition.mikrise2.demo.model.CommentCreatingModel;
 import com.itransition.mikrise2.demo.model.PostCreatingModel;
-import com.itransition.mikrise2.demo.repositories.CompanyRepository;
-import com.itransition.mikrise2.demo.repositories.UserRepository;
 import com.itransition.mikrise2.demo.services.CloudinaryService;
 import com.itransition.mikrise2.demo.services.CompanyEditingService;
 import com.itransition.mikrise2.demo.services.UserEditingService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -27,17 +23,8 @@ import java.util.*;
 @RequiredArgsConstructor
 @Controller
 public class CompanyController {
-    //TODO
-    private final UserRepository userRepository;
-
-
-    private final CompanyRepository companyRepository;
-    //TODO
-
     private final UserEditingService userEditingService;
-
     private final CompanyEditingService companyEditingService;
-
     private final CloudinaryService cloudinaryService;
 
 
@@ -54,9 +41,9 @@ public class CompanyController {
     }
 
     @PostMapping("/creating-company")
-    public String createCompany(Principal principal, Company company, @RequestParam("companyTypeString") String companyTypeStr, @RequestParam("finishDateString") String finishDateStr, @RequestParam("file") MultipartFile file) {
-        System.out.println(finishDateStr);
-        Date date = new Date();
+    public String createCompany(Principal principal, @RequestParam("companyId") String companyId, @RequestParam("companyTypeString") String companyTypeStr, @RequestParam("finishDateString") String finishDateStr, @RequestParam("file") MultipartFile file, @RequestParam("youTubeUrl") String videoUrl) {
+        var company = companyEditingService.getCompanyById(Long.valueOf(companyId));
+        var date = new Date();
         try {
             date = new SimpleDateFormat("yyyy-MM-dd").parse(finishDateStr);
         } catch (ParseException e) {
@@ -65,25 +52,23 @@ public class CompanyController {
         company.setFinishDate(date);
         company.setCompanyType(CompanyType.valueOf(companyTypeStr.toUpperCase()));
         company.setCollectedAmount(0L);
-
-        System.out.println(principal.getName());
         if (!file.isEmpty()) {
             String url = cloudinaryService.uploadFile(file);
             company.setPhotoUrl(url);
         }
-
-
+        if (!videoUrl.contains("/embed/"))
+            videoUrl = videoUrl.replace("watch?v=", "embed/");
+        company.setVideoUrl(videoUrl);
         var user = userEditingService.getUserByUserName(principal.getName());
-        user.addCompany(company);
+        if (user.getCompanies() == null)
+            user.setCompanies(new ArrayList<>());
+        user.getCompanies().add(company);
         company.setUser(user);
-        companyRepository.save(company);
+        companyEditingService.updateCompany(company);
         userEditingService.updateUser(user);
 
+        //TODO model for company
 
-        System.out.println(company);
-
-
-        //TODO
         return "redirect:/company-" + company.getId();
     }
 
@@ -91,7 +76,6 @@ public class CompanyController {
     public String getUpdateCompanyPage(@PathVariable Company company, Map<String, Object> model) {
         model.put("company", company);
         model.put("finishDate", new SimpleDateFormat("yyyy-MM-dd").format(company.getFinishDate()));
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(company.getFinishDate()));
         return "editCompany";
     }
 
@@ -100,7 +84,9 @@ public class CompanyController {
         var company = companyEditingService.getCompanyById(companyId);
         if (!file.isEmpty()) {
             String url = cloudinaryService.uploadFile(file);
-            company.addPhoto(url);
+            if (company.getPhotoUrls() == null)
+                company.setPhotoUrls(new ArrayList<>());
+            company.getPhotoUrls().add(url);
             companyEditingService.updateCompany(company);
         }
         return "redirect:/company-" + companyId;
@@ -122,8 +108,7 @@ public class CompanyController {
 
     @MessageMapping("/comment/{company-id}")
     @SendTo("/topic/comment/{company-id}")
-    public CommentCreatingModel addComment(@RequestBody CommentCreatingModel commentCreatingModel){
-        System.out.println("hello");
+    public CommentCreatingModel addComment(@RequestBody CommentCreatingModel commentCreatingModel) {
         companyEditingService.addComment(commentCreatingModel);
         return commentCreatingModel;
     }

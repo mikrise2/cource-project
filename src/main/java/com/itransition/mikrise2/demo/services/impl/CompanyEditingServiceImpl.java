@@ -1,6 +1,5 @@
 package com.itransition.mikrise2.demo.services.impl;
 
-import com.itransition.mikrise2.demo.entities.Bonus;
 import com.itransition.mikrise2.demo.entities.Company;
 import com.itransition.mikrise2.demo.model.BonusCreatingModel;
 import com.itransition.mikrise2.demo.model.CommentCreatingModel;
@@ -10,17 +9,15 @@ import com.itransition.mikrise2.demo.services.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @AllArgsConstructor
 @Service
 public class CompanyEditingServiceImpl implements CompanyEditingService {
     private final CompanyRepository companyRepository;
-
     private final BonusTransferService bonusTransferService;
-
     private final PostTransferService postTransferService;
-
     private final CommentTransferService commentTransferService;
-
     private final UserEditingService userEditingService;
 
     @Override
@@ -35,7 +32,7 @@ public class CompanyEditingServiceImpl implements CompanyEditingService {
 
     @Override
     public void saveCompany(Company company) {
-//TODO
+    //TODO
         companyRepository.save(company);
     }
 
@@ -48,7 +45,9 @@ public class CompanyEditingServiceImpl implements CompanyEditingService {
     public void addBonus(BonusCreatingModel bonusCreatingModel) {
         var company = companyRepository.findByName(bonusCreatingModel.getCompanyName());
         var bonus = bonusTransferService.getBonus(bonusCreatingModel, company);
-        company.addBonus(bonus);
+        if (company.getBonuses() == null)
+            company.setBonuses(new ArrayList<>());
+        company.getBonuses().add(bonus);
         companyRepository.save(company);
     }
 
@@ -56,7 +55,9 @@ public class CompanyEditingServiceImpl implements CompanyEditingService {
     public void addPost(PostCreatingModel postCreatingModel) {
         var company = companyRepository.findByName(postCreatingModel.getCompanyName());
         var post = postTransferService.getPost(postCreatingModel);
-        company.addPost(post);
+        if (company.getPosts() == null)
+            company.setPosts(new ArrayList<>());
+        company.getPosts().add(post);
         companyRepository.save(company);
     }
 
@@ -72,7 +73,9 @@ public class CompanyEditingServiceImpl implements CompanyEditingService {
         var post = company.getPosts().stream().filter(it -> it.getId().equals(commentCreatingModel.getPostId())).findAny().get();
         var comment = commentTransferService.getComment(commentCreatingModel);
         comment.setUser(userEditingService.getUserById(commentCreatingModel.getUserId()));
-        post.addComment(comment);
+        if (post.getComments() == null)
+            post.setComments(new ArrayList<>());
+        post.getComments().add(comment);
         companyRepository.save(company);
     }
 }

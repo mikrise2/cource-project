@@ -4,14 +4,12 @@ import com.itransition.mikrise2.demo.entities.enums.CompanyType;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 
 @Setter
 @Getter
-//@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -30,36 +28,15 @@ public class Company {
     @Column(name = "type")
     private CompanyType companyType;
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
-    @OneToMany(mappedBy = "company", cascade = {CascadeType.MERGE})
+    @OneToMany(cascade = {CascadeType.MERGE})
     private List<Bonus> bonuses;
-    @Column(name = "dead_line")
     private Date finishDate;
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE},fetch = FetchType.EAGER)
-    @JoinColumn(name = "company_id")
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.EAGER)
     private List<Post> posts;
     @ElementCollection
     private List<String> photoUrls;
-
+    private String tags;
     private String photoUrl;
-
-    public void addBonus(Bonus bonus) {
-        if (bonuses == null)
-            bonuses = new ArrayList<>();
-        bonuses.add(bonus);
-    }
-
-    public void addPost(Post post) {
-        if (posts == null)
-            posts = new ArrayList<>();
-        posts.add(post);
-    }
-
-    public void addPhoto(String photoUrl) {
-        if (photoUrls == null)
-            photoUrls = new ArrayList<>();
-        photoUrls.add(photoUrl);
-    }
-
+    private String videoUrl;
 }
