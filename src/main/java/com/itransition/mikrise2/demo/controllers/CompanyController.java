@@ -41,8 +41,8 @@ public class CompanyController {
     }
 
     @PostMapping("/creating-company")
-    public String createCompany(Principal principal, @RequestParam("companyId") String companyId, @RequestParam("companyTypeString") String companyTypeStr, @RequestParam("finishDateString") String finishDateStr, @RequestParam("file") MultipartFile file, @RequestParam("youTubeUrl") String videoUrl) {
-        var company = companyEditingService.getCompanyById(Long.valueOf(companyId));
+    public String createCompany(Principal principal, Company companyForm, @RequestParam("companyId") String companyId, @RequestParam("companyTypeString") String companyTypeStr, @RequestParam("finishDateString") String finishDateStr, @RequestParam("file") MultipartFile file, @RequestParam("youTubeUrl") String videoUrl) {
+        var company = (!companyId.equals("")) ? companyEditingService.getCompanyById(Long.valueOf(companyId)) : companyForm;
         var date = new Date();
         try {
             date = new SimpleDateFormat("yyyy-MM-dd").parse(finishDateStr);

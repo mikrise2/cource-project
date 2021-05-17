@@ -12,23 +12,23 @@
 <div th:object="${company}">
     <h1 class="text-center" th:text="${company} ?  'Edit Company' : 'Create Company'"></h1>
     <form class="container-md mt-5" th:action="@{/creating-company}" method="post" enctype="multipart/form-data">
-        <input type="hidden" th:value="${company.id}" name="companyId">
+        <input type="hidden" th:value="${company} ?${company.id}" name="companyId">
         <div class="form-group">
             <label for="inputCompanyName">Company name</label>
             <input type="text" class="form-control" id="inputCompanyName" placeholder="company name" name="name"
-                   th:value="${company} ? ${company.getName()}">
+                   th:value="${company} ? ${company.name}">
         </div>
         <div class="form-group">
             <label for="inputInfo">About company</label>
             <textarea class="form-control" id="inputInfo" placeholder="about company" rows="3" name="info"
-                      th:text="${company} ?${company.getInfo()}"></textarea>
+                      th:text="${company} ?${company.info}"></textarea>
         </div>
         <div class="form-group">
             <label for="inputSelect">Type of Company</label>
             <select id="inputSelect" class="form-select" name="companyTypeString">
                 <option style="display:none;" selected
-                        th:text="${company} ?  ${company.getCompanyType().getValue()} : 'Select type'"
-                        th:value="${company} ?  ${company.getCompanyType().getValue()} : 'none'"></option>
+                        th:text="${company} ?  ${company.companyType.getValue()} : 'Select type'"
+                        th:value="${company} ?  ${company.companyType.getValue()} : 'none'"></option>
                 <option value="Technologies">Technologies</option>
                 <option value="Sport">Sport</option>
                 <option value="Education">Education</option>

@@ -12,6 +12,7 @@
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
 </head>
 <body th:object="${company}">
+<input type="hidden" th:value="${company.user.id}" id="userId">
 <div role="navigation" th:replace="includes/header :: header">
 </div>
 <div>
@@ -22,10 +23,10 @@
                     <div class="card mb-3">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-                                <img th:src="${company.getPhotoUrl()}"
+                                <img th:src="${company.photoUrl}"
                                      alt="Admin" class="rounded-2" width="150">
                                 <div class="mt-3">
-                                    <h4 id="companyName" th:text="${company.getName()}"></h4>
+                                    <h4 id="companyName" th:text="${company.name}"></h4>
                                 </div>
                             </div>
                         </div>
@@ -44,17 +45,12 @@
                                 <div class="col">
                                     <h4 class="d-flex align-items-center mb-3">Bonuses</h4>
                                 </div>
-                                <div class="col text-end">
-                                    <button type="button" id="addBonusButton" class="btn btn-primary"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#addBonus">
-                                        add bonus
-                                    </button>
+                                <div id="bonusBtnCol" class="col text-end">
                                 </div>
                             </div>
                             <div id="bonuses" class="overflow-auto text-center d-grid gap-3">
-                                <div th:each="bonus : ${company.getBonuses()}">
-                                    <button class="btn btn-light w-100" th:text="${bonus.getInfo()}"></button>
+                                <div th:each="bonus : ${company.bonuses}">
+                                    <button class="btn btn-light w-100" th:text="${bonus.info}"></button>
                                 </div>
                             </div>
                         </div>
@@ -66,7 +62,7 @@
                             <div class="row">
                                 <h5 class="d-flex align-items-center mb-3">About us</h5>
                                 <div class="info">
-                                    <h6 th:text="${company.getInfo()}"></h6>
+                                    <h6 th:text="${company.info}"></h6>
                                 </div>
                             </div>
                             <hr>
@@ -75,7 +71,7 @@
                                     <h6 class="mb-0">Category</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary text-center"
-                                     th:text="${company.getCompanyType().getValue()}">
+                                     th:text="${company.companyType.getValue()}">
                                 </div>
                             </div>
                             <hr>
@@ -96,13 +92,13 @@
                                 <div class="col">
                                     <div class="progress m-3">
                                         <div class="progress-bar progress-bar-striped" role="progressbar"
-                                             th:style="'width:'+ ${company.getCollectedAmount()}/${company.getAmountToCollect()}*100+'%;'"
+                                             th:style="'width:'+ ${company.collectedAmount}/${company.amountToCollect}*100+'%;'"
                                              aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
-                                             th:text="${company.getCollectedAmount()}"></div>
+                                             th:text="${company.collectedAmount}"></div>
                                     </div>
                                 </div>
                                 <div class="col-sm-2 align-self-center">
-                                    <h6 class="text-end text-center" th:text="${company.getAmountToCollect()}">
+                                    <h6 class="text-end text-center" th:text="${company.amountToCollect}">
                                         1231312</h6>
                                 </div>
                             </div>
@@ -115,12 +111,7 @@
                                 <div class="col">
                                     <h4 class="d-flex align-items-center mb-3">Gallery</h4>
                                 </div>
-                                <div class="col text-end">
-                                    <button type="button" id="addPhotoBtn" class="btn btn-primary"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#addPhoto">
-                                        add photo
-                                    </button>
+                                <div id="gallery" class="col text-end">
                                 </div>
                             </div>
                             <div class="container">
@@ -145,12 +136,8 @@
                                     <div class="col">
                                         <h4 class="d-flex align-items-center mb-3">Posts</h4>
                                     </div>
-                                    <div class="col text-end">
-                                        <button type="button" id="addPostButton" class="btn btn-primary"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#addPost">
-                                            add post
-                                        </button>
+                                    <div id="postsCol" class="col text-end">
+
                                     </div>
                                 </div>
 
@@ -190,7 +177,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row mt-2">
+                                        <div class="row mt-2 commentClass">
                                             <div class="col">
                                                 <div class="form-floating">
                                             <textarea th:id="${'text'+post.id}" class="form-control"

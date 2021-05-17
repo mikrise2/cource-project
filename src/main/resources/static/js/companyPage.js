@@ -16,7 +16,6 @@ function connect() {
     let socket = new SockJS('/almaz');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
-        console.log("connected: " + frame);
         stompClient.subscribe('/topic/comment/' + $('#companyId').val(), function (response) {
             let data = JSON.parse(response.body);
             get_sender(data.text, data.postId, data.userId)
@@ -100,6 +99,7 @@ function add_post(companyName) {
 }
 
 function send_comment(id, company_id) {
+    console.log("hello")
     get_current_user_for_send_comment(id, company_id)
 }
 
@@ -113,6 +113,7 @@ function get_current_user_for_send_comment(id, company_id) {
         cache: false,
         timeout: 600000,
         success: function (data) {
+            console.log("hello1")
             let user = JSON.parse(data)
             continue_sending(id, company_id, user)
         },
@@ -146,7 +147,6 @@ function get_sender(text, post_id, user_id) {
 }
 
 function continue_sending(id, company_id, user) {
-    console.log(user.photoUrl)
     let comment_user = {
         "text": $('#text' + id).val(),
         "userId": user.id,
@@ -154,6 +154,7 @@ function continue_sending(id, company_id, user) {
         "postId": id
     }
     stompClient.send("/api/comment/" + $('#companyId').val(), {}, JSON.stringify(comment_user));
+    console.log("hell2")
 }
 
 
@@ -177,6 +178,60 @@ function add_comment_to_html(id, photo_url, username, text) {
         '                                                    </div>\n' +
         '                                                </div>\n' +
         '                                            </div>')
+}
+
+
+get_user()
+
+function get_user() {
+    $.ajax({
+        type: "GET",
+        url: "/api/user",
+        dataType: 'text',
+        contentType: 'json',
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+            if (data) {
+                let user = JSON.parse(data)
+                // create_logout_toolbar()
+                // create_my_page_button(user.id)
+                if (user.userRole === "ADMIN" || user.id.toString() === $('#userId').val()) {
+                    create_editing_elements()
+                }
+                else {
+                    let elements = document.getElementsByClassName('commentClass');
+
+                    for (let i = 0; i < elements.length; i++) {
+                        console.log(elements[i].innerHTML);
+                    }
+                }
+            }
+        },
+        error: function (e) {
+            //TODO
+        }
+    });
+}
+
+
+function create_editing_elements() {
+    $('#bonusBtnCol').append(' <button type="button" id="addBonusButton" class="btn btn-primary"\n' +
+        '                                            data-bs-toggle="modal"\n' +
+        '                                            data-bs-target="#addBonus">\n' +
+        '                                        add bonus\n' +
+        '                                    </button>')
+    $('#gallery').append('  <button type="button" id="addPhotoBtn" class="btn btn-primary"\n' +
+        '                                            data-bs-toggle="modal"\n' +
+        '                                            data-bs-target="#addPhoto">\n' +
+        '                                        add photo\n' +
+        '                                    </button>')
+    $('#postsCol').append(' <button type="button" id="addPostButton" class="btn btn-primary"\n' +
+        '                                                data-bs-toggle="modal"\n' +
+        '                                                data-bs-target="#addPost">\n' +
+        '                                            add post\n' +
+        '                                        </button>')
+
 }
 
 

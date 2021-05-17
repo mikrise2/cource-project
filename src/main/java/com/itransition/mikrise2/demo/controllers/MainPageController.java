@@ -11,5 +11,9 @@ public class MainPageController {
         return "redirect:/feed";
     }
 
+    @GetMapping("/feed")
+    public String getMainPage(){
+        return "main";
+    }
 
 }
