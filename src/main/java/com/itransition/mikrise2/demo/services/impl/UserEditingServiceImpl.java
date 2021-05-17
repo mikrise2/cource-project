@@ -16,8 +16,6 @@ import org.springframework.stereotype.Service;
 public class UserEditingServiceImpl implements UserEditingService {
     private final UserRepository userRepository;
 
-    private final CompanyEditingService companyEditingService;
-
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
@@ -47,13 +45,16 @@ public class UserEditingServiceImpl implements UserEditingService {
 
     @Override
     public void deleteUser(User user) {
-        user.getCompanies().forEach(companyEditingService::deleteCompany);
-        //TODO for bonuses same
         userRepository.delete(user);
     }
 
     @Override
     public UserRole getUserRoleByUserName(String username) {
         return userRepository.findByUsername(username).getUserRole();
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        return userRepository.findById(id).get();
     }
 }

@@ -2,6 +2,7 @@ package com.itransition.mikrise2.demo.controllers;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.itransition.mikrise2.demo.Dto.UserCommentDto;
 import com.itransition.mikrise2.demo.Dto.UserHeaderDto;
 import com.itransition.mikrise2.demo.entities.Company;
 import com.itransition.mikrise2.demo.entities.User;
@@ -33,7 +34,7 @@ import java.util.Objects;
 
 @RequiredArgsConstructor
 @Controller
-public class UserPageController {
+public class UserController {
     //TODO
     private final UserRepository userRepository;
 
@@ -58,9 +59,17 @@ public class UserPageController {
 
     @GetMapping("api/user")
     @ResponseBody
-    public UserHeaderDto getCurrentUser(Principal principal) {
+    public UserHeaderDto getCurrentUserHeader(Principal principal) {
         if (principal != null)
             return userTransferService.getUserHeaderDto(userEditingService.getUserByUserName(principal.getName()));
+        return null;
+    }
+
+    @GetMapping("api/current-user")
+    @ResponseBody
+    public UserCommentDto getCurrentUserComment(Principal principal) {
+        if (principal != null)
+            return userTransferService.getUserCommentDto(userEditingService.getUserByUserName(principal.getName()));
         return null;
     }
 

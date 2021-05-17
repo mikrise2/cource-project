@@ -152,11 +152,10 @@
                                 </div>
 
 
-
                                 <div id="posts">
                                     <div th:each="post : ${company.posts}">
-                                        <div>
-                                            <div class="row comment">
+                                        <div th:id="${post.id}">
+                                            <div class="row comment mt-3">
                                                 <div class="col align-self-center">
                                                     <h5 class="d-flex" th:text="${post.name}"></h5>
                                                 </div>
@@ -167,6 +166,42 @@
                                                         <h6 class="fs-6" th:text="${post.text}"></h6>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div th:each="comment: ${post.comments}">
+                                                <div class="mx-5 row comment">
+                                                    <div class="col-sm-1">
+                                                        <img class="rounded-circle" width="30" height="30"
+                                                             th:src="${comment.user.photoUrl}"
+                                                             alt="photo">
+                                                    </div>
+                                                    <div class="col align-self-center">
+                                                        <h5 class="d-flex" th:text="${comment.user.username}"></h5>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-1">
+                                                        </div>
+                                                        <div class="col align-self-center">
+                                                            <h6 class="fs-6" th:text="${comment.text}"></h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col">
+                                                <div class="form-floating">
+                                            <textarea th:id="${'text'+post.id}" class="form-control"
+                                                      placeholder="Leave a comment here"
+                                                      id="floatingTextarea"></textarea>
+                                                    <label for="floatingTextarea">Comment</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 align-self-center">
+                                                <button class="btn btn-primary" th:companyId="${company.id}"
+                                                        th:postId="${post.id}"
+                                                        onclick="send_comment(this.getAttribute('postId'),this.getAttribute('companyId'));">
+                                                    comment
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -189,27 +224,6 @@
                                 <!--                                                </div>-->
                                 <!--                                            </div>-->
                                 <!--                                        </div>-->
-                                <!--&lt;!&ndash;                                        <div class="mx-5 row comment">&ndash;&gt;-->
-                                <!--&lt;!&ndash;                                            <div class="col-sm-1">&ndash;&gt;-->
-                                <!--&lt;!&ndash;                                                <img class="rounded-circle" width="30" height="30"&ndash;&gt;-->
-                                <!--&lt;!&ndash;                                                     src="https://images.unsplash.com/photo-1554080353-a576cf803bda?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGhvdG98ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80"&ndash;&gt;-->
-                                <!--&lt;!&ndash;                                                     alt="photo">&ndash;&gt;-->
-                                <!--&lt;!&ndash;                                            </div>&ndash;&gt;-->
-                                <!--&lt;!&ndash;                                            <div class="col align-self-center">&ndash;&gt;-->
-                                <!--&lt;!&ndash;                                                <h5 class="d-flex">My name</h5>&ndash;&gt;-->
-                                <!--&lt;!&ndash;                                            </div>&ndash;&gt;-->
-                                <!--&lt;!&ndash;                                            <div class="row">&ndash;&gt;-->
-                                <!--&lt;!&ndash;                                                <div class="col-sm-1">&ndash;&gt;-->
-                                <!--&lt;!&ndash;                                                </div>&ndash;&gt;-->
-                                <!--&lt;!&ndash;                                                <div class="col align-self-center">&ndash;&gt;-->
-                                <!--&lt;!&ndash;                                                    <h6 class="fs-6">Apple (МФА: [ˈæp(ə)l], в переводе с&ndash;&gt;-->
-                                <!--&lt;!&ndash;                                                        англ. — «яблоко») —&ndash;&gt;-->
-                                <!--&lt;!&ndash;                                                        американская корпорация,&ndash;&gt;-->
-
-                                <!--&lt;!&ndash;                                                        (1,005 трлн долларов в ноябре 2007 года)[14].</h6>&ndash;&gt;-->
-                                <!--&lt;!&ndash;                                                </div>&ndash;&gt;-->
-                                <!--&lt;!&ndash;                                            </div>&ndash;&gt;-->
-                                <!--&lt;!&ndash;                                        </div>&ndash;&gt;-->
                                 <!--                                    </div>-->
 
 

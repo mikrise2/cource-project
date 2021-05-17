@@ -3,11 +3,10 @@ package com.itransition.mikrise2.demo.services.impl;
 import com.itransition.mikrise2.demo.entities.Bonus;
 import com.itransition.mikrise2.demo.entities.Company;
 import com.itransition.mikrise2.demo.model.BonusCreatingModel;
+import com.itransition.mikrise2.demo.model.CommentCreatingModel;
 import com.itransition.mikrise2.demo.model.PostCreatingModel;
 import com.itransition.mikrise2.demo.repositories.CompanyRepository;
-import com.itransition.mikrise2.demo.services.BonusTransferService;
-import com.itransition.mikrise2.demo.services.CompanyEditingService;
-import com.itransition.mikrise2.demo.services.PostTransferService;
+import com.itransition.mikrise2.demo.services.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +18,10 @@ public class CompanyEditingServiceImpl implements CompanyEditingService {
     private final BonusTransferService bonusTransferService;
 
     private final PostTransferService postTransferService;
+
+    private final CommentTransferService commentTransferService;
+
+    private final UserEditingService userEditingService;
 
     @Override
     public void deleteCompany(Company company) {
@@ -54,6 +57,22 @@ public class CompanyEditingServiceImpl implements CompanyEditingService {
         var company = companyRepository.findByName(postCreatingModel.getCompanyName());
         var post = postTransferService.getPost(postCreatingModel);
         company.addPost(post);
+        companyRepository.save(company);
+    }
+
+    @Override
+    public String getLastPostId(String companyName) {
+        var posts = companyRepository.findByName(companyName).getPosts();
+        return posts.get(posts.size() - 1).getId().toString();
+    }
+
+    @Override
+    public void addComment(CommentCreatingModel commentCreatingModel) {
+        var company = companyRepository.findById(commentCreatingModel.getCompanyId()).get();
+        var post = company.getPosts().stream().filter(it -> it.getId().equals(commentCreatingModel.getPostId())).findAny().get();
+        var comment = commentTransferService.getComment(commentCreatingModel);
+        comment.setUser(userEditingService.getUserById(commentCreatingModel.getUserId()));
+        post.addComment(comment);
         companyRepository.save(company);
     }
 }

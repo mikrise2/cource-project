@@ -16,4 +16,6 @@ public interface UserEditingService {
 
     UserRole getUserRoleByUserName(String username);
 
+    User getUserById(Long id);
+
 }

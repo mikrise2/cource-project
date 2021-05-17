@@ -4,6 +4,7 @@ import com.itransition.mikrise2.demo.entities.Bonus;
 import com.itransition.mikrise2.demo.entities.Company;
 import com.itransition.mikrise2.demo.entities.enums.CompanyType;
 import com.itransition.mikrise2.demo.model.BonusCreatingModel;
+import com.itransition.mikrise2.demo.model.CommentCreatingModel;
 import com.itransition.mikrise2.demo.model.PostCreatingModel;
 import com.itransition.mikrise2.demo.repositories.CompanyRepository;
 import com.itransition.mikrise2.demo.repositories.UserRepository;
@@ -23,7 +24,7 @@ import java.util.*;
 
 @RequiredArgsConstructor
 @Controller
-public class CompanyPageController {
+public class CompanyController {
     //TODO
     private final UserRepository userRepository;
 
@@ -40,10 +41,7 @@ public class CompanyPageController {
 
     @GetMapping("/company-{company}")
     public String getCompanyPage(@PathVariable Company company, Map<String, Object> model) {
-//        var company = companyRepository.findById(companyId)
-        System.out.println(company.getBonuses());
-//       company.addPhoto("https://www.imgonline.com.ua/examples/bee-on-daisy.jpg");
-//        companyRepository.save(company);
+        Collections.reverse(company.getPosts());
         model.put("company", company);
         return "company";
     }
@@ -110,18 +108,20 @@ public class CompanyPageController {
     @PostMapping("/api/bonus")
     @ResponseBody
     public void addBonus(@RequestBody BonusCreatingModel bonusCreatingModel) {
-
         companyEditingService.addBonus(bonusCreatingModel);
-
     }
-
 
     @PostMapping("/api/post")
     @ResponseBody
-    public void addPost(@RequestBody PostCreatingModel postCreatingModel) {
-
+    public String addPost(@RequestBody PostCreatingModel postCreatingModel) {
         companyEditingService.addPost(postCreatingModel);
+        return companyEditingService.getLastPostId(postCreatingModel.getCompanyName());
+    }
 
+    @PostMapping("/api/comment")
+    @ResponseBody
+    public void addComment(@RequestBody CommentCreatingModel commentCreatingModel){
+        companyEditingService.addComment(commentCreatingModel);
     }
 
 }
