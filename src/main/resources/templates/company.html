@@ -7,6 +7,9 @@
           integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{css/userPage.css}">
     <link rel="stylesheet" th:href="@{css/companyPage.css}">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
 </head>
 <body th:object="${company}">
 <div role="navigation" th:replace="includes/header :: header">
@@ -271,7 +274,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <form th:action="@{/adding-photo}" th:method="POST" enctype="multipart/form-data">
-                    <input type="hidden" th:value="${company.id}" name="companyId">
+                    <input type="hidden" id="companyId" th:value="${company.id}" name="companyId">
                     <div class="modal-header">
                         <h5 class="modal-title" id="addPhotoModalLabel">adding photo</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

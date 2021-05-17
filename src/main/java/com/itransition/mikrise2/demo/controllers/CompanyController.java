@@ -13,6 +13,8 @@ import com.itransition.mikrise2.demo.services.CompanyEditingService;
 import com.itransition.mikrise2.demo.services.UserEditingService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -118,10 +120,13 @@ public class CompanyController {
         return companyEditingService.getLastPostId(postCreatingModel.getCompanyName());
     }
 
-    @PostMapping("/api/comment")
-    @ResponseBody
-    public void addComment(@RequestBody CommentCreatingModel commentCreatingModel){
+    @MessageMapping("/comment/{company-id}")
+    @SendTo("/topic/comment/{company-id}")
+    public CommentCreatingModel addComment(@RequestBody CommentCreatingModel commentCreatingModel){
+        System.out.println("hello");
         companyEditingService.addComment(commentCreatingModel);
+        return commentCreatingModel;
     }
+
 
 }

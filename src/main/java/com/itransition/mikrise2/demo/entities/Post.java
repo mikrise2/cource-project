@@ -20,7 +20,7 @@ public class Post {
     private Long id;
     private String name;
     private String text;
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE},fetch = FetchType.EAGER)
     @JoinColumn(name = "post_id")
     private List<Comment> comments;
 

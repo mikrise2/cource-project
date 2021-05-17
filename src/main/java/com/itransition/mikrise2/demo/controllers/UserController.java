@@ -73,4 +73,11 @@ public class UserController {
         return null;
     }
 
+    @GetMapping("api/sender-user")
+    @ResponseBody
+    public UserCommentDto getSender(@RequestParam("userId")String userId) {
+
+        return userTransferService.getUserCommentDto(userEditingService.getUserById(Long.valueOf(userId)));
+    }
+
 }

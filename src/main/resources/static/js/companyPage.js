@@ -12,6 +12,19 @@ function enlarge_photo(photo_url) {
 }
 
 
+function connect() {
+    let socket = new SockJS('/almaz');
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame) {
+        console.log("connected: " + frame);
+        stompClient.subscribe('/topic/comment/' + $('#companyId').val(), function (response) {
+            let data = JSON.parse(response.body);
+            get_sender(data.text, data.postId, data.userId)
+        });
+    });
+}
+
+
 function add_bonus(companyName) {
 
     $('#addBonus').modal('hide');
@@ -87,11 +100,11 @@ function add_post(companyName) {
 }
 
 function send_comment(id, company_id) {
-    get_current_user(id, company_id)
+    get_current_user_for_send_comment(id, company_id)
 }
 
 
-function get_current_user(id, company_id) {
+function get_current_user_for_send_comment(id, company_id) {
     $.ajax({
         type: "GET",
         url: "/api/current-user",
@@ -110,6 +123,28 @@ function get_current_user(id, company_id) {
 
 }
 
+function get_sender(text, post_id, user_id) {
+    obj = {
+        "userId": user_id
+    }
+    $.ajax({
+        type: "GET",
+        url: "/api/sender-user",
+        dataType: 'text',
+        data: obj,
+        contentType: 'json',
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+            let user = JSON.parse(data)
+            add_comment_to_html(post_id, user.photoUrl, user.username, text)
+        },
+        error: function (e) {
+            //TODO
+        }
+    });
+}
+
 function continue_sending(id, company_id, user) {
     console.log(user.photoUrl)
     let comment_user = {
@@ -118,35 +153,31 @@ function continue_sending(id, company_id, user) {
         "companyId": company_id,
         "postId": id
     }
-    $.ajax({
-        type: "POST",
-        url: "/api/comment",
-        contentType: 'application/json; charset=utf-8',
-        data: JSON.stringify(comment_user),
-        dataType: 'text',
-        cache: false,
-        timeout: 600000,
-        success: function (data) {
-            $('#' + id).append('<div>\n' +
-                '                                                <div class="mx-5 row comment">\n' +
-                '                                                    <div class="col-sm-1">\n' +
-                '                                                        <img class="rounded-circle" width="30" height="30"\n' +
-                '                                                             src="' + user.photoUrl + '"\n' +
-                '                                                             alt="photo">\n' +
-                '                                                    </div>\n' +
-                '                                                    <div class="col align-self-center">\n' +
-                '                                                        <h5 class="d-flex">' + user.username + '</h5>\n' +
-                '                                                    </div>\n' +
-                '                                                    <div class="row">\n' +
-                '                                                        <div class="col-sm-1">\n' +
-                '                                                        </div>\n' +
-                '                                                        <div class="col align-self-center">\n' +
-                '                                                            <h6 class="fs-6">' + comment_user.text + '</h6>\n' +
-                '                                                        </div>\n' +
-                '                                                    </div>\n' +
-                '                                                </div>\n' +
-                '                                            </div>')
-        },
-    });
+    stompClient.send("/api/comment/" + $('#companyId').val(), {}, JSON.stringify(comment_user));
 }
 
+
+function add_comment_to_html(id, photo_url, username, text) {
+    $('#' + id).append('<div>\n' +
+        '                                                <div class="mx-5 row comment">\n' +
+        '                                                    <div class="col-sm-1">\n' +
+        '                                                        <img class="rounded-circle" width="30" height="30"\n' +
+        '                                                             src="' + photo_url + '"\n' +
+        '                                                             alt="photo">\n' +
+        '                                                    </div>\n' +
+        '                                                    <div class="col align-self-center">\n' +
+        '                                                        <h5 class="d-flex">' + username + '</h5>\n' +
+        '                                                    </div>\n' +
+        '                                                    <div class="row">\n' +
+        '                                                        <div class="col-sm-1">\n' +
+        '                                                        </div>\n' +
+        '                                                        <div class="col align-self-center">\n' +
+        '                                                            <h6 class="fs-6">' + text + '</h6>\n' +
+        '                                                        </div>\n' +
+        '                                                    </div>\n' +
+        '                                                </div>\n' +
+        '                                            </div>')
+}
+
+
+connect()
