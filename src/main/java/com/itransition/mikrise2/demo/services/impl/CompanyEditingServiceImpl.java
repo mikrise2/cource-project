@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 @AllArgsConstructor
 @Service
@@ -32,7 +33,7 @@ public class CompanyEditingServiceImpl implements CompanyEditingService {
 
     @Override
     public void saveCompany(Company company) {
-    //TODO
+        //TODO
         companyRepository.save(company);
     }
 
@@ -45,8 +46,9 @@ public class CompanyEditingServiceImpl implements CompanyEditingService {
     public void addBonus(BonusCreatingModel bonusCreatingModel) {
         var company = companyRepository.findByName(bonusCreatingModel.getCompanyName());
         var bonus = bonusTransferService.getBonus(bonusCreatingModel, company);
-        if (company.getBonuses() == null)
+        if (Objects.isNull(company.getBonuses())) {
             company.setBonuses(new ArrayList<>());
+        }
         company.getBonuses().add(bonus);
         companyRepository.save(company);
     }

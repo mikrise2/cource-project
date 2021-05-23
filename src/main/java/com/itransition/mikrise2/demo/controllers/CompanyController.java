@@ -27,8 +27,12 @@ public class CompanyController {
     private final CompanyEditingService companyEditingService;
     private final CloudinaryService cloudinaryService;
 
+    @GetMapping("/company/*")
+    public String getCompanyPage() {
+        return "company";
+    }
 
-    @GetMapping("/company-{company}")
+    @GetMapping("/company/{company}")
     public String getCompanyPage(@PathVariable Company company, Map<String, Object> model) {
         Collections.reverse(company.getPosts());
         model.put("company", company);
